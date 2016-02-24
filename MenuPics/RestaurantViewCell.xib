@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="116" id="KGk-i7-Jjw" customClass="RestaurantViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="116"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="115"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0E-tW-puZ">
+                        <rect key="frame" x="10" y="0.0" width="283" height="30"/>
+                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
+                        <color key="textColor" red="0.8927888169" green="0.47135335979999998" blue="0.014622173909999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyJ-nI-LMr">
+                        <rect key="frame" x="33" y="36" width="253" height="24"/>
+                        <fontDescription key="fontDescription" name="Damascus" family="Damascus" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbF-m6-fA6">
+                        <rect key="frame" x="33" y="59" width="195" height="23"/>
+                        <fontDescription key="fontDescription" name="Damascus" family="Damascus" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="call_R.png" translatesAutoresizingMaskIntoConstraints="NO" id="4ve-Ns-sGo">
+                        <rect key="frame" x="13" y="60" width="14" height="15"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fav_orange.png" translatesAutoresizingMaskIntoConstraints="NO" id="bir-Ph-yL8">
+                        <rect key="frame" x="95" y="88" width="17" height="17"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4s-H9-FIr">
+                        <rect key="frame" x="42" y="90" width="39" height="21"/>
+                        <fontDescription key="fontDescription" name="Damascus" family="Damascus" pointSize="14"/>
+                        <color key="textColor" red="0.5607843137254902" green="0.5607843137254902" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXw-JX-nCk">
+                        <rect key="frame" x="14" y="83" width="55" height="30"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="dealsClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="f0k-6q-I0W"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpf-dp-VxU">
+                        <rect key="frame" x="118" y="91" width="42" height="21"/>
+                        <fontDescription key="fontDescription" name="Damascus" family="Damascus" pointSize="14"/>
+                        <color key="textColor" red="0.80000000000000004" green="0.45490196078431372" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="deal_gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="pog-w8-rdl">
+                        <rect key="frame" x="14" y="87" width="20" height="19"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="address_R.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qe4-u7-zoh">
+                        <rect key="frame" x="12" y="36" width="15" height="16"/>
+                    </imageView>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="btnDeals" destination="sXw-JX-nCk" id="r1a-PK-DX4"/>
+                <outlet property="imgDeals" destination="pog-w8-rdl" id="co1-b2-wch"/>
+                <outlet property="lblDealCount" destination="Y4s-H9-FIr" id="IY0-J6-ZKG"/>
+                <outlet property="lblFavCount" destination="hpf-dp-VxU" id="Bby-RO-2ln"/>
+                <outlet property="lblRestaurantName" destination="t0E-tW-puZ" id="sqi-81-ku4"/>
+                <outlet property="lblRestaurantPhone" destination="dbF-m6-fA6" id="ivi-rs-QSe"/>
+                <outlet property="lblResturantAddress" destination="wyJ-nI-LMr" id="wbD-8R-6E0"/>
+            </connections>
+            <point key="canvasLocation" x="178" y="168"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="address_R.png" width="32" height="32"/>
+        <image name="call_R.png" width="32" height="32"/>
+        <image name="deal_gray.png" width="25" height="25"/>
+        <image name="fav_orange.png" width="32" height="32"/>
+    </resources>
+</document>

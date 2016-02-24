@@ -8,14 +8,78 @@
 
 #import "AppDelegate.h"
 
+#import "SearchViewController.h"
+#import "DealsListViewController.h"
+#import "ProfileViewController.h"
+#import "LoginViewController.h"
+#import "FavouriteRestaurantViewController.h"
+
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
+
+
+
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    
+    
+    _userid=[NSUserDefaults standardUserDefaults];
+    
+    [_userid setObject:@"0" forKey:@"UserID"];
+
+    UITabBarController * tab=[[UITabBarController alloc]init];
+   
+    SearchViewController * svc=[[SearchViewController alloc]init];
+    svc.tabBarItem.title=@"Search";
+    svc.tabBarItem.image = [UIImage imageNamed:@"search_gray"];
+    
+    UINavigationController *navS=[[UINavigationController alloc]initWithRootViewController:svc];
+    
+    DealsListViewController * dvc=[[DealsListViewController alloc]init];
+    dvc.tabBarItem.title=@"Deals";
+    dvc.tabBarItem.image = [UIImage imageNamed:@"deals_green"];
+    UINavigationController *navD=[[UINavigationController alloc]initWithRootViewController:dvc];
+    
+    FavouriteRestaurantViewController *frvc=[[FavouriteRestaurantViewController alloc]init];
+    frvc.tabBarItem.title=@"My Favorites";
+    frvc.tabBarItem.image=[UIImage imageNamed:@"fav_gray"];
+    UINavigationController *navF=[[UINavigationController alloc]initWithRootViewController:frvc];
+    
+    
+    ProfileViewController *pvc=[[ProfileViewController alloc]init];
+    pvc.tabBarItem.title=@"Profile";
+    pvc.tabBarItem.image = [UIImage imageNamed:@"profile_gray"];
+    UINavigationController *navP=[[UINavigationController alloc]initWithRootViewController:pvc];
+    
+    
+    
+    tab.viewControllers = @[navS,navD,navF,navP];
+    tab.tabBar.backgroundColor = [UIColor whiteColor];
+    
+    [tab.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [tab.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
+    
+    [tab.tabBar setSelectedImageTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    
+    [NSThread sleepForTimeInterval:2.0];
+        
+    self.window.rootViewController=tab;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+
+    
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
+    
     return YES;
 }
 
