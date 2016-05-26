@@ -19,6 +19,8 @@
 typedef void (^SCLActionBlock)(void);
 typedef BOOL (^SCLValidationBlock)(void);
 typedef NSDictionary* (^CompleteButtonFormatBlock)(void);
+
+
 typedef NSDictionary* (^ButtonFormatBlock)(void);
 
 // Action Types
@@ -53,6 +55,7 @@ typedef NS_ENUM(NSInteger, SCLActionType)
  * Support keys : backgroundColor, borderWidth, borderColor, textColor
  */
 @property (nonatomic, copy) CompleteButtonFormatBlock completeButtonFormatBlock;
+
 
 /** Set button format block.
  *

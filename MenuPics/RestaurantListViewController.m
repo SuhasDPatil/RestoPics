@@ -37,14 +37,18 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
     [self setNavBar];
     self.title=@"Restaurant List";
+    
 //    if ([self.btnFav isEqual:@"Favorite"])
 //    {
 //        self.title=@"My Favourites";
 //        [self MyFavoriteWebService];
 //        NSLog(@"Favourite WebService");
 //    }
+    
     [self.tableView reloadData];
 }
 
@@ -241,18 +245,20 @@
          }
          else
          {
-             //   [Utiles showAlert:APP_NAME Message:[responseObject objectForKey:@"Message"]];
              SCLAlertView *alert = [[SCLAlertView alloc] init];
              
-             [alert showWarning:self title:@"MenuPics" subTitle:@"Sorry ;( \n Restaurant Not Available!!!" closeButtonTitle:@"OK" duration:0.0f];
+             [alert addButton:@"Ok" actionBlock:^(void) {
+                 
+                 [self.navigationController popViewControllerAnimated:YES];
+                 
+             }];
              
-
+             [alert showTitle:self title:APP_NAME subTitle:[responseObject objectForKey:@"Message"] style:Warning closeButtonTitle:nil duration:0.0f];
+             
          }
-//         [hud hide:YES];
 
          [self.indicatorView stopAnimating];
 
-         
          [self.tableView reloadData];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -322,15 +328,19 @@
              }
              else
              {
-                 self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:[responseObject objectForKey:@"Message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                 self.alt1.tag=111;
-                 [[UIView appearance] setTintColor:[UIColor darkTextColor]];
-                 
-//                 [self.alt1 show];
              }
          }
          else
          {
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             
+             [alert addButton:@"Ok" actionBlock:^(void) {
+                 
+                 [self.navigationController popViewControllerAnimated:YES];
+                 
+             }];
+             
+             [alert showTitle:self title:APP_NAME subTitle:[responseObject objectForKey:@"Message"] style:Warning closeButtonTitle:nil duration:0.0f];
 
          }
          

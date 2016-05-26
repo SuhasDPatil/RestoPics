@@ -18,35 +18,27 @@
 {
     [super viewDidLoad];
 
-    
-    
     _indicatorView.hidden=YES;
 
-    
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
-    
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
-    
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
     _isImage=FALSE;
     
     queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
-    
     [self setSmallBorder:1];
-    
-    [self setKeyboard];
-    
     
     defaults=[NSUserDefaults standardUserDefaults];
     
     _txtUserName.text=[defaults valueForKey:@"UserName"];
-//    _txtUserPhone.text=[defaults valueForKey:@"UserPhone"];
+    _txtUserPhone.text=[defaults valueForKey:@"UserPhone"];
 
-    _txtUserPhone.text=@"";
+   // _txtUserPhone.text=@"";
     _txtUserEmail.text=[defaults valueForKey:@"EmailID"];
-    _txtAddress.text=@"";
-//    _txtCurrentPassword.text=[defaults valueForKey:@"Password"];
+    _txtAddress.text=[defaults valueForKey:@"Address"];
+    _textpassword.text=[defaults valueForKey:@"Password"];
+    _textRepeatpass.text=[defaults valueForKey:@"Password"];
     
     
     
@@ -71,11 +63,9 @@
         });
     });
     
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
-    
     [self.view addGestureRecognizer:tap];
 
     // Do any additional setup after loading the view from its nib.
@@ -83,22 +73,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-    
-//    [[self.btnCancel layer] setBorderWidth:0.5f];
-//    [[self.btnCancel layer] setBorderColor:[UIColor whiteColor].CGColor];
-//    [[self.btnCancel layer]setCornerRadius:3.5f];
-//    
-//    [[self.btnUpdate layer] setBorderWidth:0.5f];
-//    [[self.btnUpdate layer] setBorderColor:[UIColor whiteColor].CGColor];
-//    [[self.btnUpdate layer]setCornerRadius:3.5f];
-
-    
-    
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
-    
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
 }
 
 -(void)dismissKeyboard
@@ -107,45 +84,21 @@
     [_txtUserPhone resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
     [_txtAddress resignFirstResponder];
-//    [_txtCurrentPassword resignFirstResponder];
-    
-    [self SlideDownScreen];
-    
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(BOOL)prefersStatusBarHidden
 {
     return NO;
 }
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
-
-
-
 
 #pragma mark Button Click methods
 - (IBAction)CancelClicked:(id)sender
 {
-    //    [self dismissViewControllerAnimated:YES completion:nil];
     [_txtAddress resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
     [_txtUserName resignFirstResponder];
@@ -157,9 +110,6 @@
 - (IBAction)ProfileImageClicked:(id)sender
 {
     [[UIView appearance]setTintColor:[UIColor blackColor]];
-    
-    NSLog(@"ProfileImageClicked");
-    
     
     [_txtAddress resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
@@ -228,15 +178,12 @@
 
 - (IBAction)UpdateClicked:(id)sender;
 {
-    NSLog(@"Update Clicked..");
-    
     [_txtAddress resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
     [_txtUserName resignFirstResponder];
     [_txtUserPhone resignFirstResponder];
-    
-    
-    [self SlideDownScreen];
+    [_textpassword resignFirstResponder];
+    [_textRepeatpass resignFirstResponder];
     
     _indicatorView.hidden=NO;
     [_indicatorView startAnimating];
@@ -244,36 +191,15 @@
     
     if(_txtUserName.text.length==0)
     {
-        //    [Utiles showAlert:APP_NAME Message:@"Enter UserName"];
-        
         _indicatorView.hidden=YES;
         [_indicatorView stopAnimating];
 
-        
         UIAlertView * alt=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Enter User Name" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
         [alt show];
         
         return;
     }
     
-//    if(_txtUserPhone.text.length==0)
-//    {
-//        _indicatorView.hidden=YES;
-//        [_indicatorView stopAnimating];
-//
-//        
-//        [Utiles showAlert:APP_NAME Message:@"Enter Mobile No."];
-//        return;
-//    }
-//    else  if(_txtUserPhone.text.length<10)
-//    {
-//        _indicatorView.hidden=YES;
-//        [_indicatorView stopAnimating];
-//
-//        
-//        [Utiles showAlert:APP_NAME Message:@"Enter 10 digit mobile number."];
-//        return;
-//    }
     
     if(_txtUserEmail.text.length==0)
     {
@@ -283,7 +209,7 @@
         [Utiles showAlert:APP_NAME Message:@"Enter Email"];
         return;
     }
-    else if (![Utiles validEmail:[_txtUserEmail.text lowercaseString]] )
+     if (![Utiles validEmail:[_txtUserEmail.text lowercaseString]] )
     {
         _indicatorView.hidden=YES;
         [_indicatorView stopAnimating];
@@ -291,21 +217,53 @@
         [Utiles showAlert:APP_NAME Message:@"Enter Valid Email"];
         return;
     }
+    if(_textpassword.text.length==0)
+    {
+        _indicatorView.hidden=YES;
+        [_indicatorView stopAnimating];
+        
+        [Utiles showAlert:APP_NAME Message:@"Enter Password"];
+        return;
+    }
     
+    if(_textRepeatpass.text.length==0)
+    {
+        _indicatorView.hidden=YES;
+        [_indicatorView stopAnimating];
+        
+        [Utiles showAlert:APP_NAME Message:@"Enter Confirm Password"];
+        return;
+    }
+    
+    
+    if(_textpassword.text.length>0 && _textRepeatpass.text.length>0)
+    {
+        _indicatorView.hidden=YES;
+        [_indicatorView stopAnimating];
+        
+        if(![_textpassword.text isEqualToString:_textRepeatpass.text])
+        {
+            [Utiles showAlert:APP_NAME Message:@"Confirm Password does not match with Password."];
+            return;
+        }
+    }
+    else if(_textpassword.text.length!= _textRepeatpass.text.length)
+    {
+        _indicatorView.hidden=YES;
+        [_indicatorView stopAnimating];
+        
+        [Utiles showAlert:APP_NAME Message:@"Confirm Password does not match with Password."];
+        return;
+    }
 
-    
     [_txtUserName resignFirstResponder];
     [_txtUserPhone resignFirstResponder];
-//    [_txtPassword resignFirstResponder];
-//    [_txtConfermPass resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
-    
-    
     
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     
     [dict setObject:_txtUserEmail.text forKey:@"EmailID"];
-//    [dict setObject:_txtPassword.text forKey:@"Password"];
+    [dict setObject:_textpassword forKey:@"Password"];
     [dict setObject:@"Male" forKey:@"Gender"];
     [dict setObject:@"" forKey:@"UserAge"];
     [dict setObject:_txtUserPhone.text forKey:@"UserPhone"];
@@ -318,11 +276,7 @@
     {
         [dict setObject:self.selected_image forKey:@"UserPhoto"];
     }
-    
-    
     [self Registerwebservice:dict];
-
-    
     
 }
 
@@ -334,6 +288,7 @@
     NSMutableDictionary *valid_dict=[[NSMutableDictionary alloc] init];
     [valid_dict setObject:_txtUserEmail.text forKey:@"UserEmail"];
     [valid_dict setObject:[_txtUserName.text lowercaseString] forKey:@"Name"];
+    [valid_dict setObject:_textpassword.text forKey:@"Password"];
     //    [valid_dict setObject:[dict objectForKey:@"MobileNo"] forKey:@"MobileNo"];
     
     
@@ -341,8 +296,6 @@
                                parameters:valid_dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         
-         
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
          NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
@@ -369,25 +322,20 @@
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
          
      }];
-    
 }
 
 
 -(void)Registerwebservice:(NSDictionary *)dict
 {
     defaults=[NSUserDefaults standardUserDefaults];
-
-    NSString * Password=[defaults valueForKey:@"Password"];
+    
     NSNumber * IDD=[defaults valueForKey:@"UserID"];
-    
-    NSLog(@"%@",IDD);
-    
     
     NSMutableDictionary *reg_dict=[[NSMutableDictionary alloc] init];
     [reg_dict setObject:_txtUserEmail.text forKey:@"EmailID"];
-    [reg_dict setObject:Password forKey:@"Password"];
+    [reg_dict setObject:_textpassword.text forKey:@"Password"];
     [reg_dict setObject:@"Male" forKey:@"Gender"];
-    [reg_dict setObject:@"13" forKey:@"UserAge"];
+    [reg_dict setObject:@"23" forKey:@"UserAge"];
     [reg_dict setObject:_txtUserPhone.text forKey:@"UserPhone"];
     [reg_dict setObject:@"2" forKey:@"Role"];
     [reg_dict setObject:_txtUserName.text forKey:@"Name"];
@@ -398,12 +346,8 @@
     {
         [reg_dict setObject:self.selected_image forKey:@"UsersPhoto"];
     }
-    
-    
     //Remaining Fields
     [reg_dict setObject:IDD forKey:@"UserID"];
-    
-    
     
     
     [[AFAppAPIClient WSsharedClient] POST:API_REGISTER
@@ -414,17 +358,9 @@
          
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
-         
-         //         NSMutableDictionary * dataArray=[dict_res objectForKey:@"Data"];
-         //
-         //         NSString * userId=(NSString *)[dict_res objectForKey:DATA];
-         
          NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
          if([isSuccessNumber boolValue] == YES)
          {
-             //             [self DoLogin];
-             
-             
              NSMutableArray * UserIDList=[responseObject objectForKey:DATA];
              
              NSLog(@"Restaurant Array Count:::%ld",(unsigned long)UserIDList.count);
@@ -447,37 +383,21 @@
                  _UsersPhoto=[d valueForKey:@"UsersPhoto"];
               
              }
-             
-             
              [defaults setObject:_UserID forKey:@"UserID"];
              [defaults setObject:_Name forKey:@"UserName"];
              [defaults setObject:_Password forKey:@"Password"];
              [defaults setObject:_EmailID forKey:@"EmailID"];
              [defaults setObject:_UserPhone forKey:@"UserPhone"];
              [defaults setObject:_Address forKey:@"Address"];
-//             [defaults setObject:_UsersPhoto forKey:@"UsersPhoto"];
-
-             NSLog(@"User ID for new user============%@",_UserID);
              
-             self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"\n Profile Data Updated Successfully..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
-             [[UIView appearance] setTintColor:[UIColor darkGrayColor]];
-             
-             self.alt1.tag=111;
-             
-//             [self.alt1 show];
+             [defaults setObject:_UsersPhoto forKey:@"UsersPhoto"];
              
              [self.navigationController popViewControllerAnimated:YES];
-
-             
-             
          }else
          {
              
          }
-         
-         
-     }failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
+     }failure:^(AFHTTPRequestOperation *operation, NSError *error){
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
          
     }];
@@ -633,18 +553,25 @@
     [appDelegate.window addSubview:self.crop_imageView.view];
     [self addChildViewController:self.crop_imageView];
     
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
+
     
 }
 
 -(UIImage *) processImage:(UIImage *)org_img{
     
     @try {
-        
-        
         UIImage *rotatedImage;
         
         if (org_img.imageOrientation != UIImageOrientationUp)
@@ -674,15 +601,21 @@
     _imgUserPhoto.image=image;
     self.selected_image=[Utiles encodeToBase64String:image];
     [self canceledCroppingImage];
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
+
+    
 }
 -(void)canceledCroppingImage{
     [self.crop_imageView.view removeFromSuperview];
     [self.crop_imageView removeFromParentViewController];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
+    
 }
-
-
-
-
 
 
 #pragma mark UITextFieldDelegate
@@ -692,13 +625,11 @@
 {
     [[UIView appearance]setTintColor:[UIColor whiteColor]];
     
-    [self SlideupScreen:textField];
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self SlideDownScreen];
     [textField resignFirstResponder];
     return YES;
 }
@@ -717,128 +648,6 @@
     
     NSLog(@"%f",(_imgUserPhoto.frame.size.width)/2);
 
-}
-
-
--(void)setKeyboard
-{
-    
-    UIToolbar* keyboardToolBar = [[UIToolbar alloc] init];
-    //   [keyboardToolBar setBackgroundImage:[UIImage imageNamed:@"SerchbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    
-    keyboardToolBar.barStyle = UIBarStyleBlack;
-    keyboardToolBar.backgroundColor=[UIColor darkGrayColor];
-    keyboardToolBar.translucent = YES;
-    keyboardToolBar.alpha=0.8f;
-    // for ios 6
-    keyboardToolBar.tintColor = [UIColor whiteColor];
-    // for ios 7
-    //keyboardToolBar.tintColor = [UIColor whiteColor];
-    
-    [keyboardToolBar sizeToFit];
-    
-    UIBarButtonItem *flexibleSpaceLeft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(doneButtonClicked:)];
-    [keyboardToolBar setItems:[NSArray arrayWithObjects:doneButton,flexibleSpaceLeft, nil]];
-    
-    _txtUserName.inputAccessoryView=keyboardToolBar;
-    _txtUserPhone.inputAccessoryView=keyboardToolBar;
-    _txtUserEmail.inputAccessoryView=keyboardToolBar;
-    _txtAddress.inputAccessoryView=keyboardToolBar;
-//    _txtCurrentPassword.inputAccessoryView=keyboardToolBar;
-    
-}
-
--(void)doneButtonClicked:(id)sender
-{
-    [_txtUserName resignFirstResponder];
-    [_txtUserPhone resignFirstResponder];
-    [_txtUserEmail resignFirstResponder];
-    [_txtAddress resignFirstResponder];
-//    [_txtCurrentPassword resignFirstResponder];
-    
-    [self SlideDownScreen];
-    
-    
-    // for ios 6
-    
-    // for ios 7
-    // CGPoint scrollPoint = CGPointMake(0, self.view.frame.origin.y-65);
-    // [scrollView setContentOffset:scrollPoint animated:YES];
-}
-
-
--(void)SlideupScreen:(UITextField *)textField{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    if ([[UIScreen mainScreen] bounds].size.height ==480)
-    {
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -75,320, self.view.frame.size.height)];
-        }
-        else if ([_txtUserPhone isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -80, 320, self.view.frame.size.height)];
-        }
-        else if ([_txtUserEmail isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -130,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtAddress isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -150,320,  self.view.frame.size.height)];
-        }
-        
-        
-        
-    }else{
-        
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -60,320, self.view.frame.size.height)];
-        }
-        else if ([_txtUserPhone isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -70, 320, self.view.frame.size.height)];
-        }
-        else if ([_txtUserEmail isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0,  -125,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtAddress isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0,  -155,320,  self.view.frame.size.height)];
-        }
-
-    }
-    
-    [UIView commitAnimations];
-}
-
--(void)SlideDownScreen{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    
-    [UIView commitAnimations];
-    
-}
-
-#pragma mark Keyboard Delegates Methods
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-    //[self SlideupScreen];
-}
-
-
--(void)keyboardDidHide:(NSNotification *)notification
-{
-    [self SlideDownScreen];
 }
 
 

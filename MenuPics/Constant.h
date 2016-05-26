@@ -43,7 +43,9 @@
 #define API_RESTAURANT_PHOTO @"http://trymenupics.com/Menupics"
 #define API_DISH_PHOTO @"http://trymenupics.com"
 #define API_DEAL_DISH_PHOTO @"http://trymenupics.com/Menupics"
-#define API_USER_PHOTO @"http://rss.trymenupics.com"
+#define API_USER_PHOTO @"http://rss.trymenupics.com/menupicsws/UserPhotos/"
+
+#define API_user_photo @"http://rss.trymenupics.com"
 
 
 // Server 202.38.172.176
@@ -54,9 +56,6 @@
 //#define API_DISH_PHOTO @"http://202.38.172.176/Menupics"
 //#define API_DEAL_DISH_PHOTO @"http:202.38.172.176/Menupics/MenuCreate/DealImages/"
 //#define API_USER_PHOTO @"http://202.38.172.176/MenuPicsWebService/UserPhotos/"
-
-
-
 
 
 
@@ -131,9 +130,7 @@
 #define API_RESTAURANT_DEAL_BY_REST_ID (API_BASE_URL @"DealsListbyResturantID")
 
 
-
-
-
+#define Active @"0";
 
 
 //#define API_RESTAURANT_LIKE_UID (API_BASE_URL @"RestaurantLikeListby_UID")
@@ -149,7 +146,6 @@
 
 #define API_SEARCH_DEAL_REST_ID (API_BASE_URL @"SearchDealListBy_RestaurantID")
 #define API_SEARCH_DEAL_DETAIL_DEAL_ID (API_BASE_URL @"SearchDealDetailsBy_DealID")
-
 
 
 

@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblRestAddress;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorV;
 
 
 

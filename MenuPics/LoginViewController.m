@@ -12,7 +12,6 @@
 #import "RegistrationViewController.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface LoginViewController ()
 
@@ -54,7 +53,6 @@ NSUserDefaults *UserDetails;
     [[self.viewBorder layer] setBorderColor:[UIColor whiteColor].CGColor];
     [[self.viewBorder layer]setCornerRadius:3.5f];
 
-    [self setKeyboard];
     
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -63,28 +61,10 @@ NSUserDefaults *UserDetails;
     
     [self.view addGestureRecognizer:tap];
 
-    // Add a custom login button to your app
-
-    // Handle clicks on the button
-    [self.fbLoginButton
-     addTarget:self
-     action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    // Add the button to the view
-    [self.view addSubview:self.fbLoginButton];
-    
-    
-    
-    [[self.fbLoginButton layer] setBorderWidth:0.8f];
-    [[self.fbLoginButton layer] setBorderColor:[UIColor clearColor].CGColor];
-    [[self.fbLoginButton layer]setCornerRadius:3.5f];
-
     
     self.navigationController.navigationBarHidden=YES;
 
 }
-
-
 
 // Once the button is clicked, show the login dialog
 
@@ -113,10 +93,6 @@ NSUserDefaults *UserDetails;
     [_txtUserName resignFirstResponder];
     [_txtPassword resignFirstResponder];
     
-//    UIColor *color = [UIColor lightGrayColor];
-//    _txtSearch.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Search For Restaurant or Item" attributes:@{NSForegroundColorAttributeName: color}];
-    [self SlideDownScreen];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -124,13 +100,12 @@ NSUserDefaults *UserDetails;
     self.navigationController.navigationBarHidden=YES;
     
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
     
     self.tabBarController.tabBar.hidden = NO;
-//    self.tabBarController.tabBar.alpha = 0.7;
     
     _txtUserName.text=@"";
     _txtPassword.text=@"";
@@ -175,7 +150,6 @@ NSUserDefaults *UserDetails;
     
     _indicatorView.hidden=NO;
     [_indicatorView startAnimating];
-    [self SlideDownScreen];
     
     if(_txtUserName.text.length==0 && _txtPassword.text.length==0)
     {
@@ -184,13 +158,9 @@ NSUserDefaults *UserDetails;
         _indicatorView.hidden=YES;
         [_indicatorView stopAnimating];
         
-        //        UIAlertView * alt=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Please Enter Username and Password" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        //        [alt show];
-        //        return;
     }
     else
     {
-        
         [self Loginwebservice];
     }
 }
@@ -203,7 +173,6 @@ NSUserDefaults *UserDetails;
     [_txtUserName resignFirstResponder];
 
     [self.navigationController pushViewController:rc animated:YES];
-    
 }
 
 - (IBAction)SkipClicked:(id)sender
@@ -212,21 +181,16 @@ NSUserDefaults *UserDetails;
     [_txtUserName resignFirstResponder];
 
     [self.navigationController popViewControllerAnimated:YES];
-
 }
 
 - (IBAction)ForgotPassClicked:(id)sender
 {
-
-    [self SlideDownScreen];
-    
     [_txtPassword resignFirstResponder];
     [_txtUserName resignFirstResponder];
 
     ForgotPassViewController * fpvc=[[ForgotPassViewController alloc]init];
     
     [self.navigationController pushViewController:fpvc animated:YES];
-    
 }
 
 
@@ -250,7 +214,6 @@ NSUserDefaults *UserDetails;
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    
     else if (self.alt1.tag==333)
     {
         if (buttonIndex==0)
@@ -258,7 +221,6 @@ NSUserDefaults *UserDetails;
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    
 }
 
 
@@ -269,10 +231,12 @@ NSUserDefaults *UserDetails;
     
     [_txtUserName resignFirstResponder];
     [_txtPassword resignFirstResponder];
+    
     NSString * password=_txtPassword.text;
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     [dict setObject:[_txtUserName.text lowercaseString] forKey:@"EmailID"];
     [dict setObject:password forKey:@"Password"];
+    
     
     [self.indicatorView startAnimating];
 
@@ -282,9 +246,7 @@ NSUserDefaults *UserDetails;
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         
          _indicatorView.hidden=NO;
-         
          
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
@@ -314,8 +276,10 @@ NSUserDefaults *UserDetails;
                  _UserName=[d valueForKey:@"UserName"];
                  _UserPhone=[d valueForKey:@"UserPhone"];
                  _UsersPhoto=[d valueForKey:@"UsersPhoto"];
+                 AgreeTandS=[d valueForKey:@"AgreeTandS"];
                  
-   
+                 NSLog(@"UserId == %@",_UserID);
+                 
    
                  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                  //  [userDefaults setObject:[dict_res objectForKey:DATA] forKey:@"MyData"];
@@ -329,6 +293,12 @@ NSUserDefaults *UserDetails;
                  [userDefaults setObject:_UsersPhoto forKey:@"UsersPhoto"];
                  [userDefaults setObject:_Gender forKey:@"Gender"];
                  [userDefaults setObject:_UserAge forKey:@"UserAge"];
+                 [userDefaults setObject:AgreeTandS forKey:@"AgreeTandS"];
+                 
+                 NSString *active=@"menupics";
+                 
+                 [userDefaults setObject:active forKey:@"active"];
+                 
                  
                  [userDefaults synchronize];
                  
@@ -344,7 +314,10 @@ NSUserDefaults *UserDetails;
              [Utiles showAlert:ERROR Message:@"User Name or Password Incorrect"];
          }
          
-         
+         [self.indicatorView stopAnimating];
+         _indicatorView.hidden=YES;
+
+
      }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
@@ -359,120 +332,14 @@ NSUserDefaults *UserDetails;
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [self SlideupScreen:textField];
-    
-    //  [self setKeyboard];
     return YES;
 }
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
-    [self SlideDownScreen];
-    
     [textField resignFirstResponder];
-    
     return YES;
-}
-
-
-#pragma mark User Defined Methods
-
--(void)setKeyboard
-{
-    
-    UIToolbar* keyboardToolBar = [[UIToolbar alloc] init];
-    //   [keyboardToolBar setBackgroundImage:[UIImage imageNamed:@"SerchbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    
-    keyboardToolBar.barStyle = UIBarStyleBlack;
-    keyboardToolBar.backgroundColor=[UIColor darkGrayColor];
-    keyboardToolBar.translucent = YES;
-    keyboardToolBar.alpha=0.8f;
-    // for ios 6
-    keyboardToolBar.tintColor = [UIColor whiteColor];
-    // for ios 7
-    //keyboardToolBar.tintColor = [UIColor whiteColor];
-    
-    [keyboardToolBar sizeToFit];
-    
-    UIBarButtonItem *flexibleSpaceLeft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(doneButtonClicked:)];
-
-    
-    
-    [keyboardToolBar setItems:[NSArray arrayWithObjects:doneButton,flexibleSpaceLeft, nil]];
-    
-    _txtUserName.inputAccessoryView=keyboardToolBar;
-    _txtPassword.inputAccessoryView=keyboardToolBar;
-
-    
-}
-
--(void)doneButtonClicked:(id)sender
-{
-    [_txtUserName resignFirstResponder];
-    [_txtPassword resignFirstResponder];
-    [self SlideDownScreen];
-
-    
-    // for ios 6
-    
-    // for ios 7
-    // CGPoint scrollPoint = CGPointMake(0, self.view.frame.origin.y-65);
-    // [scrollView setContentOffset:scrollPoint animated:YES];
-}
-
-
-
-
--(void)SlideupScreen:(UITextField *)textField{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    if ([[UIScreen mainScreen] bounds].size.height ==480)
-    {
-        
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -45,320, self.view.frame.size.height)];
-            
-        }
-        else if([_txtPassword isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -45,320, self.view.frame.size.height)];
-
-        }
-    }
-    
-    else
-    {
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -40,320, self.view.frame.size.height)];
-        }
-        
-        else if([_txtPassword isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -40,320, self.view.frame.size.height)];
-            
-        }
-    
-    }
- 
-    [UIView commitAnimations];
-}
-
--(void)SlideDownScreen{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    
-    [UIView commitAnimations];
-    
 }
 
 

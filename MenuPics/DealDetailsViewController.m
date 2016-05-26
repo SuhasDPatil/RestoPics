@@ -59,6 +59,7 @@
         UIImage * image = [UIImage imageWithData:imgData];
         
         dispatch_async( dispatch_get_main_queue() , ^(){
+            
             self.imgDealPhoto.image=image;
             
             [_indicatorView stopAnimating];
@@ -84,6 +85,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
     
     self.navigationController.navigationBarHidden=YES;
 
@@ -254,6 +257,7 @@
     mlvc.RestaurantAddress=_RestaurantAddress;
     mlvc.RestaurantCity=_RestaurantCity;
     mlvc.RestaurantPhone1=_RestaurantPhone1;
+    
     [self.navigationController pushViewController:mlvc animated:YES];
     
 }
@@ -323,11 +327,13 @@
     }
     else
     {
-        LoginViewController * lvc=[[LoginViewController alloc]init];
         
-        [self.navigationController pushViewController:lvc animated:YES];
         
-
+        SLComposeViewController *TWITTER = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        
+        [self presentViewController:TWITTER animated:YES completion:nil];
+        
         
     }
     

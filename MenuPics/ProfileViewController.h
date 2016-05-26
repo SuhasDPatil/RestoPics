@@ -18,6 +18,8 @@
 
 @property(nonatomic,strong)UIAlertView *alt;
 
+@property(nonatomic,retain)UITabBarController *tab;
+
 
 @property (strong, nonatomic) IBOutlet UILabel *lblUserName;
 
@@ -35,7 +37,9 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgLargePhoto;
 
+@property (strong, nonatomic) NSUserDefaults* userid;
 
+//@property (strong, nonatomic) NSUserDefaults* userphoto;
 
 - (IBAction)EditButtonClicked:(id)sender;
 

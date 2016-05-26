@@ -10,6 +10,8 @@
 #import "ImageCroppingView.h"
 #import "Constant.h"
 #import "AppDelegate.h"
+#import "ProfileViewController.h"
+
 
 #import "ImageSelectionView.h"
 
@@ -35,6 +37,9 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *txtAddress;
 
+@property (strong, nonatomic) IBOutlet UITextField *textpassword;
+
+@property (strong, nonatomic) IBOutlet UITextField *textRepeatpass;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 

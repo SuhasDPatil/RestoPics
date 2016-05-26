@@ -48,6 +48,9 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblDishCalories;
 
+// vivek //
+@property (strong, nonatomic) IBOutlet UIImageView *imagecalories;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblDishDetails;
 
 

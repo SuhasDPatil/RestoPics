@@ -15,9 +15,10 @@
 @implementation MenuListingViewController
 @synthesize filteredMenuArray=_filteredMenuArray;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self MenuListService];
+    
     //    NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
     
     appDelegate = [[UIApplication sharedApplication]delegate];
@@ -35,6 +36,8 @@
         NSLog(@"User ID is =%@",userid);
         [self GetRestaurantLikeWebService];
     }
+    
+    [self MenuListService];
 
     
     queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
@@ -64,7 +67,8 @@
 {
     [self setNavBar];
     //   [self MenuListService];
-    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
     
     self.navigationController.navigationBarHidden=NO;
 }
@@ -97,6 +101,7 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"DishName contains[c] %@", searchText];
+    
     searchMenuArray = [MenuListArray filteredArrayUsingPredicate:resultPredicate];
 }
 
@@ -170,9 +175,29 @@
     NSString *strCalories=tempCell.cellDict[@"DishCals"];
     NSString *strC=@" Calories";
     
+    NSLog(@"Calories strng === %@",strCalories);
+    
+    
+    // changes by vivek //
+    
+    if ([strCalories isEqualToString:@"0"])
+    {
+        
+        cell.lblDishCalories.hidden=YES;
+        cell.ImageCalories.hidden=YES;
+    }
+    else
+        
+    {
+        
     cell.lblDishCalories.text=[NSString stringWithFormat:@"%@%@",strCalories,strC];
-   
+        
+    }
+    
+    
     dispatch_async(queue, ^(){
+        
+        [cell.indicatorV startAnimating];
         
         NSString * imgURL = tempCell.cellDict[@"DishUrl"];
         
@@ -190,6 +215,7 @@
         dispatch_async( dispatch_get_main_queue() , ^(){
             
             cell.imgDishImage.image=image;
+            [cell.indicatorV stopAnimating];
         });
     });
     return cell;
@@ -200,10 +226,10 @@
 {
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        return 183.f;
+        return 202.f;
     }
     else
-        return 183.f;
+        return 202.f;
     
 }
 
@@ -254,9 +280,13 @@
 {
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     [dict setObject:self.FKRestaurantPin forKey:@"FKRestaurantpin"];
+    
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
+    
     NSLog(@"%@",dict);
+    
     [[AFAppAPIClient WSsharedClient] POST:API_GET_MENU_BY_REST_ID
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -301,8 +331,6 @@
              }
              else
              {
-                
-                 
                  
              }
              
@@ -314,17 +342,18 @@
              NSLog(@"User ID in MenuList Webservice =%@",usrID);
              NSLog(@"***********************************************************");
              NSLog(@"***********************************************************");
+
          }
          else
          {
              
              // changes by Vivek
              
-//             SCLAlertView *alert = [[SCLAlertView alloc] init];
-//             
-//             [alert showWarning:self title:@"MenuPics" subTitle:@"Sorry  \nMenu Not Available!!!" closeButtonTitle:@"Done" duration:0.0f];
-//             
-//             [alert addButton:@"" target:self selector:@selector(DoneButtonClicked)];
+             //             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             //
+             //             [alert showWarning:self title:@"MenuPics" subTitle:@"Sorry  \nMenu Not Available!!!" closeButtonTitle:@"Done" duration:0.0f];
+             //
+             //             [alert addButton:@"" target:self selector:@selector(DoneButtonClicked)];
              
              _alt=[[UIAlertView alloc]initWithTitle:@"MenuPics" message:@"Sorry  \nMenu Not Available!!!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Done", nil];
              
@@ -333,7 +362,7 @@
              [_alt show];
              
              
-//             
+             //
              //[self.navigationController popViewControllerAnimated:YES];
              
              
@@ -568,7 +597,7 @@
     //    _btnFavourite.backgroundColor=[UIColor redColor];
     UIBarButtonItem *Favorite = [[UIBarButtonItem alloc] initWithCustomView:_btnFavourite] ;
     
-    self.navigationItem.rightBarButtonItems=[[NSArray alloc]initWithObjects:Address,Call,Favorite, nil];
+    self.navigationItem.rightBarButtonItems=[[NSArray alloc]initWithObjects:Address,Call, nil];
 }
 #pragma mark Navigation Bar button Actions
 - (void)goback

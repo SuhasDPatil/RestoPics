@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditProfileViewController">
@@ -12,6 +12,8 @@
                 <outlet property="btnUserPhoto" destination="lQm-Pa-nHa" id="M2I-xg-h2N"/>
                 <outlet property="imgUserPhoto" destination="QYY-kw-epF" id="DW9-aA-zQ0"/>
                 <outlet property="indicatorView" destination="kOA-DL-mgM" id="hIq-4u-WLM"/>
+                <outlet property="textRepeatpass" destination="3U7-Hc-Sob" id="s94-8O-ozZ"/>
+                <outlet property="textpassword" destination="UyM-NI-hvZ" id="U9t-HS-dUU"/>
                 <outlet property="txtAddress" destination="Qsq-yP-s3x" id="hgt-xc-52I"/>
                 <outlet property="txtUserEmail" destination="I0w-dH-L4Z" id="bD3-2c-sfK"/>
                 <outlet property="txtUserName" destination="RnA-Hr-0Qc" id="B9H-Sj-1Cf"/>
@@ -24,34 +26,30 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pro_bg1.png" id="5ON-1v-2KM">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Blurred_BG.png" id="5ON-1v-2KM">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.66666668653488159" green="0.41568630933761597" blue="0.094117656350135803" alpha="1" colorSpace="deviceRGB"/>
                     <color key="tintColor" red="0.66666668650000005" green="0.4156863093" blue="0.094117656349999995" alpha="1" colorSpace="deviceRGB"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hWL-Az-MQE">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IhC-tz-P9c">
                     <rect key="frame" x="90" y="29" width="141" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="kB5-kI-SKA">
                     <rect key="frame" x="8" y="29" width="40" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
                     <state key="normal">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -61,10 +59,150 @@
                         <action selector="CancelClicked:" destination="-1" eventType="touchUpInside" id="bRe-Qj-ul9"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back.png" id="xoH-0l-hss">
+                    <rect key="frame" x="14" y="37" width="16" height="10"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ebS-k9-Pso">
+                    <rect key="frame" x="0.0" y="64" width="320" height="503"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPhoto.png" id="QYY-kw-epF">
+                            <rect key="frame" x="100" y="40" width="120" height="120"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="kOA-DL-mgM">
+                            <rect key="frame" x="150" y="231" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Name :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fpH-kU-wJ1">
+                            <rect key="frame" x="32" y="185" width="256" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Name" minimumFontSize="17" clearButtonMode="always" id="RnA-Hr-0Qc">
+                            <rect key="frame" x="90" y="185" width="188" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="mCN-5B-cQc"/>
+                            </connections>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Phone :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yTX-uP-nqg">
+                            <rect key="frame" x="32" y="228" width="256" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Phone Number" minimumFontSize="17" clearButtonMode="always" id="Ai0-eJ-g9d">
+                            <rect key="frame" x="90" y="228" width="190" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Yzr-AL-6yD"/>
+                            </connections>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Email  :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vih-SG-lWD">
+                            <rect key="frame" x="32" y="272" width="256" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Email" minimumFontSize="17" id="I0w-dH-L4Z">
+                            <rect key="frame" x="90" y="272" width="190" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Omd-lj-tYw"/>
+                            </connections>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Address :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pg6-Me-czK">
+                            <rect key="frame" x="32" y="314" width="256" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Address" minimumFontSize="17" clearButtonMode="always" id="Qsq-yP-s3x">
+                            <rect key="frame" x="103" y="314" width="177" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="H1H-pb-rIV"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lQm-Pa-nHa">
+                            <rect key="frame" x="98" y="35" width="125" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="ProfileImageClicked:" destination="-1" eventType="touchUpInside" id="P0C-d2-Dyw"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Password :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="icm-OP-4TP">
+                            <rect key="frame" x="32" y="356" width="256" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="0.39956896549999998" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Repeat :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WFN-Wn-fcn">
+                            <rect key="frame" x="32" y="399" width="256" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="0.39956896549999998" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Repeat Password" textAlignment="natural" minimumFontSize="17" id="3U7-Hc-Sob">
+                            <rect key="frame" x="98" y="399" width="186" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.90300512570000002" green="0.90300512570000002" blue="0.90300512570000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="uUt-5b-0TJ"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" id="UyM-NI-hvZ">
+                            <rect key="frame" x="113" y="356" width="167" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.90300512570000002" green="0.90300512570000002" blue="0.90300512570000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="ovz-OO-yjD"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="fNh-zT-8uP"/>
+                    </connections>
+                </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cKy-aE-j8e">
                     <rect key="frame" x="260" y="29" width="52" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="13"/>
                     <state key="normal" title="Done">
@@ -75,133 +213,14 @@
                         <action selector="UpdateClicked:" destination="-1" eventType="touchUpInside" id="KGj-DX-znS"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back.png" id="xoH-0l-hss">
-                    <rect key="frame" x="14" y="37" width="16" height="10"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ebS-k9-Pso">
-                    <rect key="frame" x="0.0" y="64" width="320" height="503"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPhoto.png" id="QYY-kw-epF">
-                            <rect key="frame" x="100" y="45" width="120" height="120"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Name :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fpH-kU-wJ1">
-                            <rect key="frame" x="32" y="191" width="256" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
-                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Name" minimumFontSize="17" clearButtonMode="always" id="RnA-Hr-0Qc">
-                            <rect key="frame" x="90" y="191" width="188" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="mCN-5B-cQc"/>
-                            </connections>
-                        </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Phone :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yTX-uP-nqg">
-                            <rect key="frame" x="32" y="235" width="256" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
-                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Phone Number" minimumFontSize="17" clearButtonMode="always" id="Ai0-eJ-g9d">
-                            <rect key="frame" x="90" y="235" width="190" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="Yzr-AL-6yD"/>
-                            </connections>
-                        </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Email  :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vih-SG-lWD">
-                            <rect key="frame" x="32" y="279" width="256" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
-                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Email" minimumFontSize="17" id="I0w-dH-L4Z">
-                            <rect key="frame" x="90" y="279" width="190" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="Omd-lj-tYw"/>
-                            </connections>
-                        </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Address :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pg6-Me-czK">
-                            <rect key="frame" x="32" y="324" width="256" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.69651124338624337" green="0.69651124338624337" blue="0.69651124338624337" alpha="0.19" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="13"/>
-                            <color key="textColor" red="0.8679728835978836" green="0.8679728835978836" blue="0.8679728835978836" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Address" minimumFontSize="17" clearButtonMode="always" id="Qsq-yP-s3x">
-                            <rect key="frame" x="103" y="324" width="177" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="textColor" red="0.9030051256613757" green="0.9030051256613757" blue="0.9030051256613757" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="H1H-pb-rIV"/>
-                            </connections>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lQm-Pa-nHa">
-                            <rect key="frame" x="98" y="41" width="125" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="ProfileImageClicked:" destination="-1" eventType="touchUpInside" id="P0C-d2-Dyw"/>
-                            </connections>
-                        </button>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="kOA-DL-mgM">
-                            <rect key="frame" x="150" y="231" width="20" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </activityIndicatorView>
-                    </subviews>
-                    <animations/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="fNh-zT-8uP"/>
-                    </connections>
-                </scrollView>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="358" y="196"/>
         </view>
     </objects>
     <resources>
-        <image name="Pro_bg1.png" width="640" height="1136"/>
+        <image name="Blurred_BG.png" width="640" height="1097"/>
         <image name="back.png" width="32" height="21"/>
         <image name="userPhoto.png" width="183" height="176"/>
     </resources>

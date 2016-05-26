@@ -20,7 +20,11 @@
     _isImage=FALSE;
     
     [self setSmallBorder:1];
-
+ 
+    
+    checkboxselected=@"";
+    
+    
     
     UIColor *color = [UIColor lightTextColor];
     
@@ -51,15 +55,15 @@
     [[self.btnSignUp layer] setBorderColor:[UIColor lightTextColor].CGColor];
     [[self.btnSignUp layer]setCornerRadius:2.5f];
 
-    [self setKeyboard];
-
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
     
+    
+    
+
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -72,7 +76,6 @@
     [_txtConfermPass resignFirstResponder];
     [_txtEmail resignFirstResponder];
 
-    [self SlideDownScreen];
     
 }
 
@@ -86,9 +89,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
     [self.navigationController setNavigationBarHidden:YES];
 }
@@ -197,7 +200,6 @@
     
     _indicatorView.hidden=NO;
     [_indicatorView startAnimating];
-    [self SlideDownScreen];
 
     
     
@@ -212,22 +214,6 @@
         return;
     }
     
-//    if(_txtPhoneNumber.text.length==0)
-//    {
-//        _indicatorView.hidden=YES;
-//        [_indicatorView stopAnimating];
-//        
-//        [Utiles showAlert:APP_NAME Message:@"Enter Mobile No."];
-//        return;
-//    }
-//    else  if(_txtPhoneNumber.text.length<10)
-//    {
-//        _indicatorView.hidden=YES;
-//        [_indicatorView stopAnimating];
-//        
-//        [Utiles showAlert:APP_NAME Message:@"Enter 10 digit mobile number."];
-//        return;
-//    }
     
     if(_txtEmail.text.length==0)
     {
@@ -285,6 +271,17 @@
         return;
     }
     
+    if(_btncheckbox.selected==NO)
+    {
+        _indicatorView.hidden=YES;
+        [_indicatorView stopAnimating];
+        
+        [Utiles showAlert:APP_NAME Message:@"Confirm Terms of Services"];
+        
+        return;
+        
+    }
+    
    
     
     //if(self.selected_image.length==0){
@@ -306,6 +303,11 @@
     [dict setObject:[_txtUserName.text lowercaseString] forKey:@"Name"];
     [dict setObject:@"" forKey:@"Address"];
     [dict setObject:@"1" forKey:@"Task"];
+    [dict setObject:@"0" forKey:@"AgreeTandS"];
+    
+   
+    
+    
     
     if(self.selected_image.length>0)
     {
@@ -376,9 +378,11 @@
     [reg_dict setObject:_txtPhoneNumber.text forKey:@"UserPhone"];
     [reg_dict setObject:@"2" forKey:@"Role"];
     [reg_dict setObject:_txtUserName.text forKey:@"Name"];
-    [reg_dict setObject:@"Pune" forKey:@"Address"];
+    [reg_dict setObject:@"" forKey:@"Address"];
     [reg_dict setObject:@"1" forKey:@"Task"];
+    [reg_dict setObject:@"0" forKey:@"AgreeTandS"];
 
+    
     if(self.selected_image.length>0)
     {
         [reg_dict setObject:self.selected_image forKey:@"UsersPhoto"];
@@ -408,7 +412,6 @@
          
          if([isSuccessNumber boolValue] == YES)
          {
-//             [self DoLogin];
              
             
              NSMutableArray * UserIDList=[responseObject objectForKey:DATA];
@@ -420,25 +423,34 @@
                  NSDictionary * d = [UserIDList objectAtIndex:i];
                  
                  _UserID=[d valueForKey:@"UserID"];
+                 _Username=[d valueForKey:@"Name"];
+                 _Email=[d valueForKey:@"EmailID"];
+                 _Address=[d valueForKey:@"Address"];
+                 _Phone=[d valueForKey:@"UserPhone"];
+                 _Password=[d valueForKey:@"Password"];
+                 _userphoto=[d valueForKey:@"UsersPhoto"];
                  
              }
-             
              NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-             
              [defaults setObject:_UserID forKey:@"UserID"];
-
+             [defaults setObject:_Username forKey:@"UserName"];
+             [defaults setObject:_Email forKey:@"EmailID"];
+             [defaults setObject:_Address  forKey:@"Address"];
+             [defaults setObject:_Phone forKey:@"UserPhone"];
+             [defaults setObject:_Password forKey:@"Password"];
+             [defaults setObject:_userphoto forKey:@"UsersPhoto"];
+             
+             
+             
+             [defaults synchronize];
+             
+             
              NSLog(@"User ID for new user============%@",_UserID);
              
-             self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"\n Registration Successful..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
-             [[UIView appearance] setTintColor:[UIColor darkGrayColor]];
-
-             self.alt1.tag=111;
-//             [self.alt1 show];
+            
              
-             [self.navigationController popViewControllerAnimated:YES];
+              [self.navigationController popViewControllerAnimated:YES];
 
-
-    
          }else
          {
              
@@ -456,53 +468,6 @@
     
 }
 
-
--(void)DoLogin{
-    
-    
-    NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
-    [dict setObject:[_txtEmail.text lowercaseString] forKey:@"EmailID"];
-    [dict setObject:_txtPassword.text forKey:@"Password"];
-    [[AFAppAPIClient WSsharedClient] POST:API_LOGIN
-                               parameters:dict
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         
-         
-         NSDictionary *dict_res=(NSDictionary *)responseObject;
-         
-         NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
-         
-         if([isSuccessNumber boolValue] == YES)
-         {
-             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-             [userDefaults setObject:[dict_res objectForKey:DATA] forKey:@"Data"];
-             
-             [userDefaults setObject:_txtUserName.text forKey:@"UserName"];
-             [userDefaults setObject:_txtPassword.text forKey:@"Password"];
-             [userDefaults setObject:_UserID forKey:@"UserID"];
-
-             [userDefaults synchronize];
-             
-             
-             SearchViewController *srch=[[SearchViewController alloc]init];
-             
-             [self.navigationController pushViewController:srch animated:YES];
-             
-         }
-         else
-         {
-             [Utiles showAlert:APP_NAME Message:@"Login fail."];
-         }
-         
-         
-     }
-    failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         [Utiles showAlert:ERROR Message:[error localizedDescription]];
-         
-     }];
-}
 
 
 
@@ -716,20 +681,14 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     [[UIView appearance]setTintColor:[UIColor whiteColor]];
-
-        [self SlideupScreen:textField];
-        return YES;
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self SlideDownScreen];
     [textField resignFirstResponder];
     return YES;
 }
-
-
-
 
 
 #pragma mark User Defined
@@ -744,133 +703,46 @@
 }
 
 
--(void)setKeyboard
-{
-    
-    UIToolbar* keyboardToolBar = [[UIToolbar alloc] init];
-    //   [keyboardToolBar setBackgroundImage:[UIImage imageNamed:@"SerchbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    
-    keyboardToolBar.barStyle = UIBarStyleBlack;
-    keyboardToolBar.backgroundColor=[UIColor darkGrayColor];
-    keyboardToolBar.translucent = YES;
-    keyboardToolBar.alpha=0.8f;
-    // for ios 6
-    keyboardToolBar.tintColor = [UIColor whiteColor];
-    // for ios 7
-    //keyboardToolBar.tintColor = [UIColor whiteColor];
-    
-    [keyboardToolBar sizeToFit];
-    
-    UIBarButtonItem *flexibleSpaceLeft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                   style:UIBarButtonItemStylePlain target:self
-                                                                  action:@selector(doneButtonClicked:)];
-    [keyboardToolBar setItems:[NSArray arrayWithObjects:doneButton,flexibleSpaceLeft, nil]];
-    
-    _txtUserName.inputAccessoryView=keyboardToolBar;
-    _txtPassword.inputAccessoryView=keyboardToolBar;
-    _txtPhoneNumber.inputAccessoryView=keyboardToolBar;
-    _txtConfermPass.inputAccessoryView=keyboardToolBar;
-    _txtEmail.inputAccessoryView=keyboardToolBar;
-    
-}
-
--(void)doneButtonClicked:(id)sender
-{
-    [_txtUserName resignFirstResponder];
-    [_txtPhoneNumber resignFirstResponder];
-    [_txtPassword resignFirstResponder];
-    [_txtConfermPass resignFirstResponder];
-    [_txtEmail resignFirstResponder];
-    
-    [self SlideDownScreen];
-    
-    
-    // for ios 6
-    
-    // for ios 7
-    // CGPoint scrollPoint = CGPointMake(0, self.view.frame.origin.y-65);
-    // [scrollView setContentOffset:scrollPoint animated:YES];
-}
-
-
--(void)SlideupScreen:(UITextField *)textField{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    if ([[UIScreen mainScreen] bounds].size.height ==480)
-    {
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -90,320, self.view.frame.size.height)];
-        }
-        else if ([_txtPhoneNumber isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -90, 320, self.view.frame.size.height)];
-        }
-        else if ([_txtEmail isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -165,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtPassword isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -160,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtConfermPass isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -205,320,  self.view.frame.size.height)];
-        }
-        
-            
-        
-    }else{
-        
-        if ([_txtUserName isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -50,320, self.view.frame.size.height)];
-        }
-        else if ([_txtPhoneNumber isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -60, 320, self.view.frame.size.height)];
-        }
-        else if ([_txtEmail isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0,  -120,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtPassword isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0,  -125,320,  self.view.frame.size.height)];
-        }
-        else if ([_txtConfermPass isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0,  -205,320,  self.view.frame.size.height)];
-        }
-    }
-    
-    [UIView commitAnimations];
-}
-
--(void)SlideDownScreen{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    
-    [UIView commitAnimations];
-    
-}
-
 #pragma mark Keyboard Delegates Methods
 - (void)keyboardDidShow:(NSNotification *)notification
 {
-    //[self SlideupScreen];
 }
 
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-    [self SlideDownScreen];
 }
 
+
+- (IBAction)btnactionchkbox:(id)sender
+{
+    _btncheckbox.selected=!_btncheckbox.selected;
+    
+    if (_btncheckbox.selected==YES)
+    {
+        
+        [_btncheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateSelected];
+        
+        
+
+         NSLog(@"Selceted");
+        
+        checkboxselected=@"Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service \n By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service \n\n Accounts \n\n When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.";
+        
+        
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service \n By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service \n\n Accounts \n\n When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service. \n You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with our Service or a third-party service \n You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account. \n\n Links To Other Web Sites \n\n Our Service may contain links to third-party web sites or services that are not owned or controlled by MenuPics.\n MenuPics has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that MenuPics shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.\n\n We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit. \n\n Termination \n\n   We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability. \n We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service. \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.\n\n Governing Law \n\n These Terms shall be governed and construed in accordance with the laws of Illinois, United States, without regard to its conflict of law provisions.\n Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.\n\n Changes \n\n We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.\n By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service. \n\n Contact Us \n\n If you have any questions about these Terms, please contact us.\n   " delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        
+        
+        [alert show];
+    }
+    else if (_btncheckbox.selected==NO)
+    {
+            [_btncheckbox setImage:[UIImage imageNamed:@"uncheckbox.png"] forState:UIControlStateNormal];
+
+             NSLog(@"un selected");
+            
+            checkboxselected=@"";
+    }
+}
 
 @end

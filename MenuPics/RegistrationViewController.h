@@ -15,9 +15,14 @@
 
 #import "AFAppAPIClient.h"
 #import "SearchViewController.h"
+#import "ProfileViewController.h"
+
 
 @interface RegistrationViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,ImageCroppingViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
-
+{
+    NSString *checkboxselected;
+    
+}
 
 @property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 @property (strong, nonatomic) IBOutlet UIButton *btnSignUp;
@@ -35,6 +40,13 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
 
+// checkbox of terms of services //
+
+
+@property (weak, nonatomic) IBOutlet UIButton *btncheckbox;
+
+
+- (IBAction)btnactionchkbox:(id)sender;
 
 
 //For Cropping Image
@@ -45,6 +57,16 @@
 
 //Save Parsed Response
 @property(nonatomic,strong)NSString *UserID;
+@property(nonatomic,retain)NSString *Username;
+@property(nonatomic,retain)NSString *Email;
+@property(nonatomic,retain)NSString *Address;
+@property(nonatomic,retain)NSString *Phone;
+@property(nonatomic,retain)NSString *Password;
+@property(nonatomic,retain)NSString *userphoto;
+
+
+
+
 
 //Alertview
 @property(strong,nonatomic)UIAlertView *alt1;

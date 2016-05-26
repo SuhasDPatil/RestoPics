@@ -96,6 +96,11 @@
     pinch.delegate = self;
     [self.view addGestureRecognizer:pinch];
     self.pinch = pinch;
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -227,8 +232,10 @@
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
-    NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString * path = [documentsPath stringByAppendingPathComponent:@"image.png"];
+    
+   // NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    
+   // NSString * path = [documentsPath stringByAppendingPathComponent:@"image.png"];
     
     CGFloat scale  = [[self.selectImageView.window screen] scale];
     CGFloat radius = self.circleRadius * scale;

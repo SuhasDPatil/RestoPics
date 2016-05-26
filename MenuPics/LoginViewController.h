@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 
 
+
 #import "ForgotPassViewController.h"
 //#define TWITTER_CLIENT_KEY @"uSx6bs0NXR21iHukpjec1PP9o"
 //#define TWITTER_CLIENT_SECRET @"vrLjSfuII28nH99rAUgP3qbRdySjSigiGlcA8O6wG72XbliNXO"
@@ -24,19 +25,12 @@
     dispatch_queue_t queue ;
     
     NSMutableArray * userarray;
+    
+    NSString *AgreeTandS;
+   
+    
 
 }
-
-//Facebook and twitter
-
-
-@property (weak, nonatomic) IBOutlet UIButton *fbLoginButton;
-
-
-
-
-
-
 
 
 

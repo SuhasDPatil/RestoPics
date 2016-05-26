@@ -18,7 +18,8 @@
 {
     [super viewDidLoad];
     
-    queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
+    [self MenuDetailsWebService];
+
 
     if ([[UIScreen mainScreen] bounds].size.height ==480)
     {
@@ -66,9 +67,23 @@
     NSString * strP=@"PRICE $";
     self.lblPrice.text=[NSString stringWithFormat:@"%@%@",strP,strPrice];
     NSString *strCalories=self.M_DishCals;
+    NSLog(@"Dish Calories == %@",strCalories);
     NSString *strC=@" Calories";
-    self.lblDishCalories.text=[NSString stringWithFormat:@"%@%@",strCalories,strC];
     
+    
+    if ([strCalories isEqualToString:@"0"])
+    {
+        
+        self.lblDishCalories.hidden=YES;
+        self.lblCaloriesBorder.hidden=YES;
+        self.imagecalories.hidden=YES;
+    
+    }
+    else
+    {
+        self.lblDishCalories.text=[NSString stringWithFormat:@"%@%@",strCalories,strC];
+        
+    }
     
     
     self.lblDishDetails.text=self.M_Dishdesc;
@@ -77,9 +92,13 @@
     
     self.lblDishDescription.text=self.M_Dishdesc;
     
+    
+    queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
+
     dispatch_async(queue, ^(){
         
-        [self.indicator startAnimating];
+        [_indicatorView startAnimating];
+        
         NSString * imgURL = self.M_DishPhoto;
         NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
         
@@ -94,12 +113,14 @@
         UIImage * image = [UIImage imageWithData:imgData];
         
         dispatch_async( dispatch_get_main_queue() , ^(){
+            
             self.imgDishImage.image=image;
-            [self.indicator stopAnimating];
+            
+            [_indicatorView stopAnimating];
         });
     });
 
-    [self MenuDetailsWebService];
+
     [self setKeyboard];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -131,6 +152,8 @@
 {
     self.navigationController.navigationBarHidden=YES;
     
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
 //    [self setNavBar];
 }
 
@@ -322,13 +345,13 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Twitter"
-                                                        message:@"Twitter integration is not available.  Make sure you have setup your Twitter account on your device."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Settings"
-                                              otherButtonTitles:@"OK", nil];
-        [alert show];
-        alert.tag=101;
+        
+        
+        SLComposeViewController *TWITTER = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        
+        [self presentViewController:TWITTER animated:YES completion:nil];
+
         
     }
     
@@ -354,6 +377,7 @@
             [self.navigationController pushViewController:log animated:YES];
         }
     }
+
 }
 
 #pragma mark CustomIOSAlertViewDelegate
@@ -629,44 +653,20 @@
                  
                  //Facebook Sharing Button
                  
-                 
-                 
-                 
-                 
                  FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-                 
                  NSString *urlString=[NSString stringWithFormat:@"http://www.trymenupics.com/"];
-                 
-                 
                  NSLog(@"Shre Link :%@",urlString);
-                 
                  content.contentURL = [NSURL URLWithString:urlString];
-                 
-                 
-                 
                  content.contentTitle=[NSString stringWithFormat:@"%@ \n : %@",_RestaurantName,_DishName];
-                 
                  content.contentDescription=[NSString stringWithFormat:@"\n %@",_Dishdesc];
-                 
-                 
                  NSString * imgURL = self.M_DishPhoto;
-                 
                  NSString *combined = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
-                 
-                 
                  NSString * replacedStr=[combined stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-                 
-                 
-                 
                  NSString * rep=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
-                 
-                 
                  NSLog(@"Image URL====%@",rep);
-
                  content.imageURL=[NSURL URLWithString:rep];
                  FBSDKShareButton *Sharebutton;
-                 
-                 Sharebutton = [[FBSDKShareButton alloc] initWithFrame:CGRectMake(52, 242, 80, 30)];
+                 Sharebutton = [[FBSDKShareButton alloc] initWithFrame:CGRectMake(8, 242, 150, 30)];
 
 //                 if ([[UIScreen mainScreen] bounds].size.height ==480)
 //                 {

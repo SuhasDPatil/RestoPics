@@ -29,7 +29,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
 
     self.navigationController.navigationBarHidden=NO;
 

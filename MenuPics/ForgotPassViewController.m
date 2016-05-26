@@ -30,9 +30,6 @@
     [[self.btnSend layer]setCornerRadius:3.5f];
     
     
-    
-    
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
@@ -51,7 +48,6 @@
 {
     [_txtEmailAddress resignFirstResponder];
     
-    [self SlideDownScreen];
     
 }
 
@@ -81,7 +77,6 @@
     _indicatorView.hidden=NO;
     [_indicatorView startAnimating];
     
-    [self SlideDownScreen];
     
     if(_txtEmailAddress.text.length==0)
     {
@@ -120,7 +115,6 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [self SlideupScreen:textField];
     
     return YES;
 }
@@ -129,100 +123,11 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     
-    [self SlideDownScreen];
     
     [textField resignFirstResponder];
     
     return YES;
 }
-
-
-
-#pragma mark User Defined Methods
-//
-//-(void)setKeyboard
-//{
-//    
-//    UIToolbar* keyboardToolBar = [[UIToolbar alloc] init];
-//    //   [keyboardToolBar setBackgroundImage:[UIImage imageNamed:@"SerchbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-//    
-//    keyboardToolBar.barStyle = UIBarStyleBlack;
-//    keyboardToolBar.backgroundColor=[UIColor darkGrayColor];
-//    keyboardToolBar.translucent = YES;
-//    keyboardToolBar.alpha=0.8f;
-//    // for ios 6
-//    keyboardToolBar.tintColor = [UIColor whiteColor];
-//    // for ios 7
-//    //keyboardToolBar.tintColor = [UIColor whiteColor];
-//    
-//    [keyboardToolBar sizeToFit];
-//    
-//    UIBarButtonItem *flexibleSpaceLeft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-//    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-//                                                                   style:UIBarButtonItemStylePlain target:self
-//                                                                  action:@selector(doneButtonClicked:)];
-//    
-//    
-//    
-//    [keyboardToolBar setItems:[NSArray arrayWithObjects:doneButton,flexibleSpaceLeft, nil]];
-//    
-//    _txtEmailAddress.inputAccessoryView=keyboardToolBar;
-//    
-//    
-//}
-//
-//-(void)doneButtonClicked:(id)sender
-//{
-//    [_txtEmailAddress resignFirstResponder];
-//    [self SlideDownScreen];
-//    
-//    
-//    // for ios 6
-//    
-//    // for ios 7
-//    // CGPoint scrollPoint = CGPointMake(0, self.view.frame.origin.y-65);
-//    // [scrollView setContentOffset:scrollPoint animated:YES];
-//}
-//
-//
-//
-
--(void)SlideupScreen:(UITextField *)textField{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    if ([[UIScreen mainScreen] bounds].size.height ==480)
-    {
-        
-        if ([_txtEmailAddress isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -85,320, self.view.frame.size.height)];
-            
-        }
-    }
-    
-    else
-    {
-        if ([_txtEmailAddress isEqual:textField])
-        {
-            [self.view setFrame:CGRectMake(0, -80,320, self.view.frame.size.height)];
-        }
-        
-    }
-    
-    [UIView commitAnimations];
-}
-
--(void)SlideDownScreen{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    
-    [UIView commitAnimations];
-    
-}
-
 
 
 #pragma mark WebServices

@@ -20,12 +20,15 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblPriceBG;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorV;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgPriceBG;
 
 
 @property(nonatomic,retain)NSMutableDictionary *cellDict;
 
+// vivek //
+@property (strong, nonatomic) IBOutlet UIImageView *ImageCalories;
 
 
 @end

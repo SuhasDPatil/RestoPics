@@ -14,7 +14,9 @@
 #import "SCLAlertView.h"
 
 @interface SearchViewController : UIViewController<CLLocationManagerDelegate,UITextFieldDelegate>
-
+{
+    SCLAlertView *alert;
+}
 @property(nonatomic,strong)CLLocationManager *locationManager;
 
 

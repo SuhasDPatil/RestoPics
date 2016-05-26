@@ -22,15 +22,17 @@
     
 //    self.title=@"My Profile";
     
+    
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial Rounded MT Bold" size:14],NSFontAttributeName, nil]];
 
     
     queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
+    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -49,19 +51,28 @@
 //    return UIStatusBarStyleLightContent;
 //}
 
+
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden=YES;
-
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_bg_green"]];
     
-    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_bg_orange"]];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
+    
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
     NSLog(@"Will Appear");
+    
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
+    
     NSString * userID=[defaults objectForKey:@"UserID"];
+    
+    NSString *userphoto=[defaults objectForKey:@"UsersPhoto"];
+    
+    NSLog(@"user photo ==   %@",userphoto);
 
+    
+    
     if ([userID isEqual:@"0"])
     {
         
@@ -73,20 +84,25 @@
         
         NSLog(@"%@",log.FromProfileView);
         
-        
-        
         [self.navigationController pushViewController:log animated:YES];
     }
     else
+        
     {
         NSLog(@"Profile View with Login Id %@ ",[defaults valueForKey:@"UserID"]);
         _lblUserName.text=[defaults valueForKey:@"UserName"];
-//        _lblUserGender.text=[defaults valueForKey:@"Gender"];
+        //        _lblUserGender.text=[defaults valueForKey:@"Gender"];
         _lblUserEmailID.text=[defaults valueForKey:@"EmailID"];
-        _lblUserPhone.text=[defaults valueForKey:@"UserPhone"];
+        //_lblUserPhone.text=[defaults valueForKey:@"UserPhone"];
         _lblUserAddress.text=[defaults valueForKey:@"Address"];
         
+        NSString *userphoto=[defaults objectForKey:@"UsersPhoto"];
+        NSString *active=[defaults objectForKey:@"Active"];
         
+        NSLog(@"user photo ==   %@",userphoto);
+        
+         NSLog(@"Active ==   %@",active);
+
         
         [[self.imgUserPhoto layer] setBorderWidth:4.5];
         [[self.imgUserPhoto layer] setBorderColor:[UIColor whiteColor].CGColor];
@@ -95,12 +111,23 @@
         
         NSLog(@"%f",(_imgUserPhoto.frame.size.width)/2);
         
-        dispatch_async(queue, ^(){
+        
+        
+        dispatch_async(queue, ^()
+        {
+            
             
             NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
+           
+            
             NSString *combined = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
             NSLog(@"User's Photo image URL==%@",combined);
             NSURL * url = [NSURL URLWithString:combined];
+//            NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
+//            NSString *active=[defaults valueForKey:@"Active"];
+            
+        
+            
             NSData * imgData = [NSData dataWithContentsOfURL:url];
             UIImage * image = [UIImage imageWithData:imgData];
             dispatch_async( dispatch_get_main_queue() , ^(){
@@ -115,9 +142,8 @@
                 }
                 
             });
-        });
-
         
+        });
     }
 }
 
@@ -163,26 +189,60 @@
 {
     EditProfileViewController *epvc=[[EditProfileViewController alloc]init];
     
+    
+    
+    
     [self.navigationController pushViewController:epvc animated:YES];
 }
 
 - (IBAction)LogoutClicked:(id)sender {
     
+    
+    _userid=[NSUserDefaults standardUserDefaults];
+    
+    
+    
+    [_userid setObject:@"0" forKey:@"UserID"];
+    
+   // [_userphoto setObject:@"" forKey:@"Users"]
 
-    exit(1);
+    
+    LoginViewController *login=[[LoginViewController alloc]init];
+
+    _tab.selectedIndex=2;
+
+    
+    [self.navigationController pushViewController:login animated:YES];
+    
+    //self.imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+
+    
+    
+//    if ( [[MPUser activeUser] loggedIn]==false)
+//    {
+//        NSLog(@"Logout");
+//    }
+//    else
+//    {
+//        NSLog(@"Active");
+//    }
     
     
 //    _lblUserName.text=nil;
 //    _lblUserEmailID.text=nil;
 //    _lblUserPhone.text=nil;
 //    _lblUserAddress.text=nil;
-//    self.imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+ 
 //
 //    
 //    NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
 //    
-//    [defaults setObject:@"0" forKey:@"UserID"];
-//    
+//    [defaults setObject:@"0" forKey:@"Inactive"];
+    
+    
+    
+    
+//
 //    
 //    
 //    

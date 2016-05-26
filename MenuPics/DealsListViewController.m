@@ -31,14 +31,22 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial Rounded MT Bold" size:14],NSFontAttributeName, nil]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"DealsViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    
+    
+    
+
 
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
+
     [self setNavBar];
     
     [self DealsRestaurantWebService];
+    
 
     self.navigationController.navigationBarHidden=NO;
 }
@@ -88,7 +96,31 @@
     NSLog(@"%@",tempCell.cellDict[@"dealName"]);
     
     
-    
+    dispatch_async(queue, ^(){
+        
+        [cell.indicatorV startAnimating];
+        
+        NSString * imgURL = tempCell.cellDict[@"DealPhoto"];
+        
+        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+        
+        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+        
+        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        
+        
+        NSLog(@"DISH image URL==%@",combined);
+        NSURL * url = [NSURL URLWithString:combined];
+        NSData * imgData = [NSData dataWithContentsOfURL:url];
+        UIImage * image = [UIImage imageWithData:imgData];
+        dispatch_async( dispatch_get_main_queue() , ^(){
+            
+            cell.imgDealPhoto.image=image;
+            
+            [cell.indicatorV stopAnimating];
+        });
+    });
+
     return cell;
 
     
@@ -172,7 +204,6 @@
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-
          [_indicatorView startAnimating];
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          
@@ -197,7 +228,6 @@
                      _dealCondition=[d valueForKey:@"dealCondition"];
                      _dealName=[d valueForKey:@"dealName"];
                      _endTime=[d valueForKey:@"endTime"];
-
                      
                      _RestaurantActivateViaEmail=[d valueForKey:@"RestaurantActivateViaEmail"];
                      _RestaurantAddress=[d valueForKey:@"RestaurantAddress"];
@@ -226,15 +256,20 @@
              else
              {
                  
-                 
              }
          }
          else
          {
-             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:APP_NAME message:[responseObject objectForKey:@"Message"] preferredStyle:UIAlertControllerStyleAlert];
              
-             [alert showWarning:self title:@"MenuPics" subTitle:@"Sorry ;( \n Deals Not Available!!!" closeButtonTitle:@"OK" duration:0.0f];
+             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction *action)
+                                        {
+                                            [self.tabBarController setSelectedIndex:0];
+                                        }];
+             [alertController addAction:okAction];
              
+             [self presentViewController:alertController animated:YES completion:nil];
          }
 
          [_indicatorView stopAnimating];
