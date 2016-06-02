@@ -22,9 +22,9 @@
     [self setSmallBorder:1];
  
     
-    checkboxselected=@"";
     
-    
+    [_img_CheckBox setImage:[UIImage imageNamed:@"uncheckbox.png"]];
+
     
     UIColor *color = [UIColor lightTextColor];
     
@@ -88,6 +88,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
     [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     
@@ -129,7 +130,6 @@
     [_txtConfermPass resignFirstResponder];
     [_txtEmail resignFirstResponder];
     
-    NSLog(@"ProfileImageClicked");
     
     BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     
@@ -189,6 +189,32 @@
     }
 }
 
+
+- (IBAction)btnactionchkbox:(id)sender
+{
+    
+    _btncheckbox.selected=!_btncheckbox.selected;
+    
+    if (_btncheckbox.selected==YES)
+    {
+        [_img_CheckBox setImage:[UIImage imageNamed:@"checkbox.png"]];
+        
+        
+        NSLog(@"Selceted");
+        
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service \n By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service \n\n Accounts \n\n When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service. \n You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with our Service or a third-party service \n You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account. \n\n Links To Other Web Sites \n\n Our Service may contain links to third-party web sites or services that are not owned or controlled by MenuPics.\n MenuPics has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that MenuPics shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.\n\n We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit. \n\n Termination \n\n   We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability. \n We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service. \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.\n\n Governing Law \n\n These Terms shall be governed and construed in accordance with the laws of Illinois, United States, without regard to its conflict of law provisions.\n Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.\n\n Changes \n\n We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.\n By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service. \n\n Contact Us \n\n If you have any questions about these Terms, please contact us.\n   " delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        
+        [alert show];
+        
+    }
+    else if (_btncheckbox.selected==NO)
+    {
+        [_img_CheckBox setImage:[UIImage imageNamed:@"uncheckbox.png"]];
+        NSLog(@"un selected");
+        
+    }
+}
+
 - (IBAction)SignUpClicked:(id)sender
 {
     
@@ -197,16 +223,9 @@
     [_txtPassword resignFirstResponder];
     [_txtConfermPass resignFirstResponder];
     [_txtEmail resignFirstResponder];
-    
-    _indicatorView.hidden=NO;
-    [_indicatorView startAnimating];
 
-    
-    
     if(_txtUserName.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         UIAlertView * alt=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Enter User Name" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
         [alt show];
@@ -214,19 +233,33 @@
         return;
     }
     
+    long len=_txtPhoneNumber.text.length;
+    
+    
+    
+    
+    
+    if (len==0 || len>9)
+    {
+        NSLog(@"%ld",len);
+
+    }
+    else
+    {
+        
+        [Utiles showAlert:APP_NAME Message:@"Enter Valid Phone Number"];
+        return;
+
+    }
     
     if(_txtEmail.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Email"];
         return;
     }
     else if (![Utiles validEmail:[_txtEmail.text lowercaseString]] )
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Valid Email"];
         return;
@@ -234,28 +267,26 @@
     
     if(_txtPassword.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Password"];
         return;
     }
-    
+    else if (_txtPassword.text.length<6)
+    {
+        
+        [Utiles showAlert:APP_NAME Message:@"Minimum Password Length should be 6 digit"];
+        return;
+    }
     if(_txtConfermPass.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Confirm Password"];
         return;
     }
     
     
-    if(_txtPassword.text.length>0 && _txtConfermPass.text.length>0)
+    if(_txtPassword.text.length>6 && _txtConfermPass.text.length>6)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
-        
         if(![_txtPassword.text isEqualToString:_txtConfermPass.text])
         {
             [Utiles showAlert:APP_NAME Message:@"Confirm Password does not match with Password."];
@@ -264,8 +295,6 @@
     }
     else if(_txtPassword.text.length!= _txtConfermPass.text.length)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Confirm Password does not match with Password."];
         return;
@@ -273,8 +302,6 @@
     
     if(_btncheckbox.selected==NO)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Confirm Terms of Services"];
         
@@ -322,13 +349,13 @@
 
 #pragma mark WebServices
 
--(void)checkValidUser:(NSDictionary *)dict{
+-(void)checkValidUser:(NSDictionary *)dict
+{
     
     NSMutableDictionary *valid_dict=[[NSMutableDictionary alloc] init];
     [valid_dict setObject:_txtEmail.text forKey:@"UserEmail"];
     [valid_dict setObject:[_txtUserName.text lowercaseString] forKey:@"Name"];
     //    [valid_dict setObject:[dict objectForKey:@"MobileNo"] forKey:@"MobileNo"];
-    
     
     [[AFAppAPIClient WSsharedClient] POST:API_VALID_USER
                                parameters:valid_dict
@@ -356,8 +383,11 @@
                  [Utiles showAlert:ERROR Message:[dict_res objectForKey: @"Message"]];
              }
          }
+         
 
      }
+     
+     
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
@@ -370,6 +400,9 @@
 
 -(void)Registerwebservice:(NSDictionary *)dict
 {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    
     NSMutableDictionary *reg_dict=[[NSMutableDictionary alloc] init];
     [reg_dict setObject:_txtEmail.text forKey:@"EmailID"];
     [reg_dict setObject:_txtPassword.text forKey:@"Password"];
@@ -382,7 +415,6 @@
     [reg_dict setObject:@"1" forKey:@"Task"];
     [reg_dict setObject:@"0" forKey:@"AgreeTandS"];
 
-    
     if(self.selected_image.length>0)
     {
         [reg_dict setObject:self.selected_image forKey:@"UsersPhoto"];
@@ -392,7 +424,6 @@
     //Remaining Fields
     [reg_dict setObject:@"0" forKey:@"UserID"];
     
-    [self.indicatorView startAnimating];
 
     
     [[AFAppAPIClient WSsharedClient] POST:API_REGISTER
@@ -400,6 +431,7 @@
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          
+         [hud show:YES];
          
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
@@ -416,7 +448,6 @@
             
              NSMutableArray * UserIDList=[responseObject objectForKey:DATA];
         
-             NSLog(@"Restaurant Array Count:::%ld",(unsigned long)UserIDList.count);
              int i;
              for (i=0; i<UserIDList.count; i++)
              {
@@ -432,7 +463,7 @@
                  
              }
              NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-             [defaults setObject:_UserID forKey:@"UserID"];
+//             [defaults setObject:@"0" forKey:@"UserID"];
              [defaults setObject:_Username forKey:@"UserName"];
              [defaults setObject:_Email forKey:@"EmailID"];
              [defaults setObject:_Address  forKey:@"Address"];
@@ -445,10 +476,6 @@
              [defaults synchronize];
              
              
-             NSLog(@"User ID for new user============%@",_UserID);
-             
-            
-             
               [self.navigationController popViewControllerAnimated:YES];
 
          }else
@@ -456,15 +483,13 @@
              
          }
          
-         
+         [hud hide:YES];
      }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
          
      }];
-    
-    [self.indicatorView stopAnimating];
     
 }
 
@@ -586,7 +611,7 @@
             if (_img_ProfilePic==nil) {
                 _img_ProfilePic.image=[UIImage imageNamed:@""];
             }
-            _img_ProfilePic.image=[UIImage imageNamed:@"userPhoto.png"];
+//            _img_ProfilePic.image=[UIImage imageNamed:@"userPhoto.png"];
         
             self.selected_image=@"";
             _isImage=FALSE;
@@ -680,7 +705,6 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [[UIView appearance]setTintColor:[UIColor whiteColor]];
     return YES;
 }
 
@@ -703,46 +727,5 @@
 }
 
 
-#pragma mark Keyboard Delegates Methods
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-}
-
-
--(void)keyboardDidHide:(NSNotification *)notification
-{
-}
-
-
-- (IBAction)btnactionchkbox:(id)sender
-{
-    _btncheckbox.selected=!_btncheckbox.selected;
-    
-    if (_btncheckbox.selected==YES)
-    {
-        
-        [_btncheckbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateSelected];
-        
-        
-
-         NSLog(@"Selceted");
-        
-        checkboxselected=@"Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service \n By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service \n\n Accounts \n\n When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.";
-        
-        
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service \n By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service \n\n Accounts \n\n When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service. \n You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with our Service or a third-party service \n You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account. \n\n Links To Other Web Sites \n\n Our Service may contain links to third-party web sites or services that are not owned or controlled by MenuPics.\n MenuPics has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that MenuPics shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.\n\n We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit. \n\n Termination \n\n   We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability. \n We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms \n Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service. \n All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.\n\n Governing Law \n\n These Terms shall be governed and construed in accordance with the laws of Illinois, United States, without regard to its conflict of law provisions.\n Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.\n\n Changes \n\n We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.\n By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service. \n\n Contact Us \n\n If you have any questions about these Terms, please contact us.\n   " delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        
-        
-        [alert show];
-    }
-    else if (_btncheckbox.selected==NO)
-    {
-            [_btncheckbox setImage:[UIImage imageNamed:@"uncheckbox.png"] forState:UIControlStateNormal];
-
-             NSLog(@"un selected");
-            
-            checkboxselected=@"";
-    }
-}
 
 @end

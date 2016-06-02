@@ -36,7 +36,6 @@
 
     [self setNavBar];
 
-    NSLog(@"Will Appear");
     
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
@@ -51,7 +50,6 @@
         
         log.FromProfileView=@"Profile";
         
-        NSLog(@"%@",log.FromProfileView);
         [self.navigationController pushViewController:log animated:YES];
     }
     else
@@ -160,7 +158,6 @@
     
     
     DealsListViewController * dlvc=[[DealsListViewController alloc]init];
-    NSLog(@"%@",dlvc.restaurantsID);
     [self.navigationController pushViewController:dlvc animated:YES];
     
     //    }
@@ -180,8 +177,6 @@
     mlvc.RestaurantCity=tempCell.cellDict[@"RestaurantCity"];
     mlvc.RestaurantPhone1=tempCell.cellDict[@"RestaurantPhone1"];
     
-    NSLog(@"Selected Restaurant Pin==%@",mlvc.FKRestaurantPin);
-    NSLog(@"Selected Restaurant Pin==%@",mlvc.RestaurantName);
     
     [self.navigationController pushViewController:mlvc animated:YES];
 }
@@ -202,12 +197,10 @@
     
     NSString * userID=[defaults objectForKey:@"UserID"];
     
-    NSLog(@"%@",userID);
     
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     [dict setObject:userID forKey:@"UserID"];
     
-    NSLog(@"%@",dict);
     [[AFAppAPIClient WSsharedClient] POST:API_RESTAURANT_FAVORITE_LIST_UID
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -219,13 +212,11 @@
          
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              // NSArray *list=[responseObject objectForKey:@"Data"];
              RestaurantListArray=[[NSMutableArray alloc]init];
              RestaurantListArray=[responseObject objectForKey:@"Data"];
              if(RestaurantListArray.count>0)
              {
-                 NSLog(@"Restaurant Array Count:::%ld",(unsigned long)RestaurantListArray.count);
                  int i;
                  for (i=0; i<RestaurantListArray.count; i++)
                  {
@@ -247,9 +238,6 @@
                      _Restaurant_Like=[d valueForKey:@"Restaurant_Like"];
                      _Restaurant_Dislike=[d valueForKey:@"Restaurant_Dislike"];
                      
-                     NSLog(@"Restaurant Name: %@", _RestaurantName);
-                     NSLog(@"Restaurant Address: %@", _RestaurantAddress);
-                     NSLog(@"Restaurant Photo: %@", _RestaurantPhoto);
                      
                  }
                  
@@ -258,7 +246,6 @@
              {
                  self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:[responseObject objectForKey:@"Message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                  self.alt1.tag=111;
-                 [[UIView appearance] setTintColor:[UIColor darkTextColor]];
                  
                  [self.alt1 show];
              }
@@ -267,7 +254,6 @@
          {
              self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:[responseObject objectForKey:@"Message"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
              self.alt1.tag=222;
-             [[UIView appearance] setTintColor:[UIColor darkTextColor]];
              
              [self.alt1 show];
          }
@@ -281,7 +267,6 @@
          
          self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
          self.alt1.tag=333;
-         [[UIView appearance] setTintColor:[UIColor darkTextColor]];
          
          [self.alt1 show];
      }];

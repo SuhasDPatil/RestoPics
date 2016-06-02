@@ -18,7 +18,6 @@
 {
     [super viewDidLoad];
 
-    _indicatorView.hidden=YES;
 
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:11.0f/255 green:137.0f/255 blue:1.0f/255 alpha:1.0f]];
     [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
@@ -44,9 +43,10 @@
     
     dispatch_async(queue, ^(){
         
+        [_indicatorViewProfile startAnimating];
+        
         NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
         NSString *combined = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
-        NSLog(@"User's Photo image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         UIImage * image = [UIImage imageWithData:imgData];
@@ -59,7 +59,7 @@
             {
                 self.imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
             }
-            
+            [_indicatorViewProfile stopAnimating];
         });
     });
     
@@ -109,7 +109,6 @@
 
 - (IBAction)ProfileImageClicked:(id)sender
 {
-    [[UIView appearance]setTintColor:[UIColor blackColor]];
     
     [_txtAddress resignFirstResponder];
     [_txtUserEmail resignFirstResponder];
@@ -120,9 +119,9 @@
     BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     
     NSString *actionSheetTitle = @"Profile Photo";
-    NSString *other1 = @"Camera";
-    NSString *other2 = @"Gallery";
-    NSString *other3 = @"Remove";
+    NSString *Camera = @"Camera";
+    NSString *Gallery = @"Gallery";
+    NSString *Remove = @"Remove";
     NSString *cancelTitle = @"Cancel";
     
     if(isCamera)
@@ -134,7 +133,8 @@
                                           delegate:self
                                           cancelButtonTitle:cancelTitle
                                           destructiveButtonTitle:nil
-                                          otherButtonTitles:other1, other2,other3, nil];
+                                          otherButtonTitles:Camera, Gallery,Remove, nil];
+            actionSheet.tag=100;
             
             [actionSheet showInView:self.view];
         }
@@ -145,7 +145,9 @@
                                           delegate:self
                                           cancelButtonTitle:cancelTitle
                                           destructiveButtonTitle:nil
-                                          otherButtonTitles:other1, other2, nil];
+                                          otherButtonTitles:Camera, Gallery, nil];
+            actionSheet.tag=101;
+            
             
             [actionSheet showInView:self.view];
         }
@@ -159,8 +161,9 @@
                                           delegate:self
                                           cancelButtonTitle:cancelTitle
                                           destructiveButtonTitle:nil
-                                          otherButtonTitles:other2,other3, nil];
-            
+                                          otherButtonTitles:Gallery,Remove, nil];
+            actionSheet.tag=200;
+
             [actionSheet showInView:self.view];
             
         }
@@ -170,10 +173,159 @@
             picker.delegate = self;
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             
-            [self.navigationController presentViewController:picker animated:YES completion:^{        }];
+            [self.navigationController presentViewController:picker animated:YES completion:^{
+            
+            }];
         }
     }
 }
+
+
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSInteger i = buttonIndex;
+    if (actionSheet.tag==100)
+    {
+        
+        switch(i)
+        {
+            case 0:
+            {
+                
+                BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+                if(isCamera){
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    picker.cameraDevice=UIImagePickerControllerCameraDeviceFront;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }else{
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }
+            }
+                break;
+            case 1:
+            {
+                BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+                if(isCamera){
+                    
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }else{
+//                    _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+                    self.selected_image=@"";
+                    _isImage=FALSE;
+                }
+            }
+                
+            case 2:
+            {
+                if (_imgUserPhoto==nil) {
+                    _imgUserPhoto.image=[UIImage imageNamed:@""];
+                }
+                _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+                
+                self.selected_image=@"";
+                _isImage=FALSE;
+            }
+                break;
+            default:
+                
+                break;
+        }
+    }
+    
+    else if (actionSheet.tag==101)
+    {
+        
+        switch(i)
+        {
+            case 0:
+            {
+                
+                BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+                if(isCamera){
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    picker.cameraDevice=UIImagePickerControllerCameraDeviceFront;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }else{
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }
+            }
+                break;
+            case 1:
+            {
+                BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+                if(isCamera){
+                    
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }else{
+//                    _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+                    self.selected_image=@"";
+                    _isImage=FALSE;
+                }
+            }
+            default:
+                break;
+        }
+    }
+    else if (actionSheet.tag==200)
+    {
+        
+        switch(i)
+        {
+            case 0:
+            {
+                BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+                if(isCamera){
+                    
+                    UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
+                    picker.delegate = self;
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+                }else{
+//                    _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+                    self.selected_image=@"";
+                    _isImage=FALSE;
+                }
+            }
+                
+            case 1:
+            {
+                if (_imgUserPhoto==nil) {
+                    _imgUserPhoto.image=[UIImage imageNamed:@""];
+                }
+                _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+                
+                self.selected_image=@"";
+                _isImage=FALSE;
+            }
+                break;
+            default:
+                
+                break;
+        }
+        
+    }
+
+    
+}
+
 
 
 - (IBAction)UpdateClicked:(id)sender;
@@ -185,61 +337,69 @@
     [_textpassword resignFirstResponder];
     [_textRepeatpass resignFirstResponder];
     
-    _indicatorView.hidden=NO;
-    [_indicatorView startAnimating];
 
     
     if(_txtUserName.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
 
         UIAlertView * alt=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"Enter User Name" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
         [alt show];
         
         return;
     }
+    long len=_txtUserPhone.text.length;
+
+    if (len==0 || len>9)
+    {
+        NSLog(@"%ld",len);
+        
+    }
+    else
+    {
+        
+        [Utiles showAlert:APP_NAME Message:@"Enter Valid Phone Number"];
+        return;
+    }
     
     
+
     if(_txtUserEmail.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
 
         [Utiles showAlert:APP_NAME Message:@"Enter Email"];
         return;
     }
      if (![Utiles validEmail:[_txtUserEmail.text lowercaseString]] )
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
 
         [Utiles showAlert:APP_NAME Message:@"Enter Valid Email"];
         return;
     }
     if(_textpassword.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Password"];
         return;
     }
+    else if (_textpassword.text.length<6)
+    {
+        
+        [Utiles showAlert:APP_NAME Message:@"Minimum Password Length should be 6 digit"];
+        return;
+    }
+
     
     if(_textRepeatpass.text.length==0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Enter Confirm Password"];
         return;
     }
+
     
     
     if(_textpassword.text.length>0 && _textRepeatpass.text.length>0)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         if(![_textpassword.text isEqualToString:_textRepeatpass.text])
         {
@@ -249,8 +409,6 @@
     }
     else if(_textpassword.text.length!= _textRepeatpass.text.length)
     {
-        _indicatorView.hidden=YES;
-        [_indicatorView stopAnimating];
         
         [Utiles showAlert:APP_NAME Message:@"Confirm Password does not match with Password."];
         return;
@@ -283,8 +441,11 @@
 
 #pragma mark Web-Service Functionality
 
--(void)checkValidUser:(NSDictionary *)dict{
+-(void)checkValidUser:(NSDictionary *)dict
+{
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     NSMutableDictionary *valid_dict=[[NSMutableDictionary alloc] init];
     [valid_dict setObject:_txtUserEmail.text forKey:@"UserEmail"];
     [valid_dict setObject:[_txtUserName.text lowercaseString] forKey:@"Name"];
@@ -296,6 +457,9 @@
                                parameters:valid_dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
+         [hud show:YES];
+         
+         
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
          NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
@@ -316,6 +480,7 @@
                  [Utiles showAlert:ERROR Message:[dict_res objectForKey: @"Message"]];
              }
          }
+         [hud hide:YES];
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -328,6 +493,9 @@
 -(void)Registerwebservice:(NSDictionary *)dict
 {
     defaults=[NSUserDefaults standardUserDefaults];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     
     NSNumber * IDD=[defaults valueForKey:@"UserID"];
     
@@ -355,6 +523,8 @@
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          
+         [hud show:YES];
+         
          
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
@@ -363,7 +533,6 @@
          {
              NSMutableArray * UserIDList=[responseObject objectForKey:DATA];
              
-             NSLog(@"Restaurant Array Count:::%ld",(unsigned long)UserIDList.count);
              int i;
              for (i=0; i<UserIDList.count; i++)
              {
@@ -397,6 +566,9 @@
          {
              
          }
+         
+         [hud hide:YES];
+         
      }failure:^(AFHTTPRequestOperation *operation, NSError *error){
          [Utiles showAlert:ERROR Message:[error localizedDescription]];
          
@@ -466,64 +638,6 @@
     
 }
 
-
-#pragma mark UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSInteger i = buttonIndex;
-    
-    switch(i)
-    {
-        case 0:
-        {
-            
-            BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-            if(isCamera){
-                UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
-                picker.delegate = self;
-                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                picker.cameraDevice=UIImagePickerControllerCameraDeviceFront;
-                [self.navigationController presentViewController:picker animated:YES completion:^{}];
-            }else{
-                UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
-                picker.delegate = self;
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                [self.navigationController presentViewController:picker animated:YES completion:^{}];
-            }
-        }
-            break;
-        case 1:
-        {
-            BOOL isCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-            if(isCamera){
-                
-                UIImagePickerController * picker = [[UIImagePickerController alloc] init] ;
-                picker.delegate = self;
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                [self.navigationController presentViewController:picker animated:YES completion:^{}];
-            }else{
-                _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
-                self.selected_image=@"";
-                _isImage=FALSE;
-            }
-        }
-            
-        case 2:
-        {
-            if (_imgUserPhoto==nil) {
-                _imgUserPhoto.image=[UIImage imageNamed:@""];
-            }
-            _imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
-            
-            self.selected_image=@"";
-            _isImage=FALSE;
-        }
-            break;
-        default:
-            
-            break;
-    }
-}
 
 
 
@@ -623,7 +737,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [[UIView appearance]setTintColor:[UIColor whiteColor]];
+//    [[UIView appearance]setTintColor:[UIColor whiteColor]];
     
     return YES;
 }
@@ -646,7 +760,6 @@
     [_imgUserPhoto.layer setBorderColor:[UIColor whiteColor].CGColor];
     [_imgUserPhoto.layer setMasksToBounds:YES];
     
-    NSLog(@"%f",(_imgUserPhoto.frame.size.width)/2);
 
 }
 

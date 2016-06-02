@@ -27,11 +27,10 @@
     NSMutableArray * userarray;
     
     NSString *AgreeTandS;
-   
-    
 
 }
 
+@property(nonatomic)BOOL * isFromProfile;
 
 
 @property (strong, nonatomic) IBOutlet UIView *view;

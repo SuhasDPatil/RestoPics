@@ -102,14 +102,11 @@
     [self.txtSearch resignFirstResponder];
     
     self.searchText=self.txtSearch.text;
-    NSLog(@"Search Text==%@",self.searchText);
     
     RestaurantListViewController * rlvc=[[RestaurantListViewController alloc]init];
     rlvc.btnFind=@"Find";
-    NSLog(@"%@ Button Clicked",rlvc.btnFind);
     
     rlvc.S_text=self.searchText;
-    NSLog(@"%@",rlvc.S_text);
     self.tabBarController.hidesBottomBarWhenPushed=NO;
     [self.navigationController pushViewController:rlvc animated:YES];
 }
@@ -143,17 +140,12 @@
         self.longit=[NSString stringWithFormat:@"%.6f",currentlocation.coordinate.longitude];
         self.latit=[NSString stringWithFormat:@"%.6f",currentlocation.coordinate.latitude];
     }
-    NSLog(@"Longitude= %+.6f  and Latitude= %+.6f",currentlocation.coordinate.longitude,currentlocation.coordinate.latitude);
-
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
     
     [defaults setObject:_latit forKey:@"Lat"];
     [defaults setObject:_longit forKey:@"Long"];
     
-    NSLog(@"NSDefaults: %@",defaults);
-    
-    NSLog(@"Lat Long ");
 }
 
 
@@ -162,6 +154,7 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+
     //  [self setKeyboard];
     return YES;
 }
@@ -170,13 +163,10 @@
 {
     [textField resignFirstResponder];
     self.searchText=self.txtSearch.text;
-    NSLog(@"Search Text==%@",self.searchText);
     
     RestaurantListViewController * rlvc=[[RestaurantListViewController alloc]init];
     rlvc.btnFind=@"Find";
-    NSLog(@"%@ Button Clicked",rlvc.btnFind);
     rlvc.S_text=self.searchText;
-    NSLog(@"%@",rlvc.S_text);
     
     self.tabBarController.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:rlvc animated:YES];

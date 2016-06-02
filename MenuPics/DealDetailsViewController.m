@@ -53,7 +53,6 @@
         
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         UIImage * image = [UIImage imageWithData:imgData];
@@ -98,7 +97,6 @@
     NSString *urlString=[NSString stringWithFormat:@"http://www.trymenupics.com/"];
     
     
-    NSLog(@"Shre Link :%@",urlString);
     
     content.contentURL = [NSURL URLWithString:urlString];
     
@@ -121,7 +119,6 @@
     NSString * rep=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
     
     
-    NSLog(@"Image URL====%@",rep);
     
     content.imageURL=[NSURL URLWithString:rep];
     FBSDKShareButton *Sharebutton;
@@ -218,19 +215,16 @@
 
 - (IBAction)callClicked:(id)sender
 {
-    NSLog(@"%@",self.RestaurantPhone1);
     NSString *phNo = self.RestaurantPhone1;
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
         [[UIApplication sharedApplication] openURL:phoneUrl];
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
 
     }
     else
     {
         UIAlertView * calert = [[UIAlertView alloc]initWithTitle:APP_NAME message:@"\nCall facility is not available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [calert show];
     }
 
@@ -240,9 +234,7 @@
 - (IBAction)addressClicked:(id)sender
 {
     
-    NSLog(@"Address button clicked");
     UIAlertView * alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[NSString stringWithFormat:@"\n%@,\n%@.",self.RestaurantAddress,self.RestaurantCity] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [[UIView appearance] setTintColor:[UIColor darkTextColor]];
     [alt show];
     
 }
@@ -315,7 +307,6 @@
         
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         

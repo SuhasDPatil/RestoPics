@@ -41,9 +41,6 @@
 //    
 //    NSString *active=[userDefaults valueForKey:@"Active"];
 //    
-//    NSLog(@"Active == %@",active);
-//    NSLog(@"Username == %@",username);
-//    NSLog(@"Password == %@",password);
 //    
 //
 //    

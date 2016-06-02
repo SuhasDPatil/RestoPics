@@ -29,11 +29,9 @@
     if ([userid isEqual:@"0"])
     {
         //       _btnFavourite.backgroundColor=[UIColor redColor];
-        NSLog(@"User ID is =%@",userid);
     }
     else
     {
-        NSLog(@"User ID is =%@",userid);
         [self GetRestaurantLikeWebService];
     }
     
@@ -46,7 +44,6 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"MenusTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     
-    self.alt.delegate=self;
     
     
     [self.searchDisplayController.searchResultsTableView registerNib:[UINib nibWithNibName:@"MenusTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
@@ -61,7 +58,10 @@
     self.navigationController.navigationBarHidden=YES;
 
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=YES;
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -175,7 +175,6 @@
     NSString *strCalories=tempCell.cellDict[@"DishCals"];
     NSString *strC=@" Calories";
     
-    NSLog(@"Calories strng === %@",strCalories);
     
     
     // changes by vivek //
@@ -208,7 +207,6 @@
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         UIImage * image = [UIImage imageWithData:imgData];
@@ -260,9 +258,6 @@
     detMenu.M_RestaurantName=self.RestaurantName;
     
     
-    NSLog(@"%@",detMenu.M_UserID);
-    NSLog(@"%@",detMenu.M_DishID);
-    
     
     
     [self.navigationController pushViewController:detMenu animated:YES];
@@ -285,7 +280,6 @@
     
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
     
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_GET_MENU_BY_REST_ID
                                parameters:dict
@@ -298,7 +292,6 @@
          
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              // NSArray *list=[responseObject objectForKey:@"Data"];
              MenuListArray=[[NSMutableArray alloc]init];
              MenuListArray=[responseObject objectForKey:@"Data"];
@@ -322,55 +315,31 @@
                      _dislike=[d valueForKey:@"dislike"];
                      _goodLike=[d valueForKey:@"goodLike"];
                      
-                     NSLog(@"Dish Name: %@", _DishName);
-                     NSLog(@"Dish Price: %@", _DishPrice);
-                     NSLog(@"Dish Calories: %@", _DishCals);
-                     NSLog(@"User ID: %@",[d valueForKey:@"UserID"]);
-                     NSLog(@"%@",[defaults objectForKey:@"UserID"]);
                  }
              }
              else
              {
                  
              }
-             
-             NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-             NSNumber * usrID=[defaults objectForKey:@"UserID"];
-             NSLog(@"***********************************************************");
-             NSLog(@"***********************************************************");
-             
-             NSLog(@"User ID in MenuList Webservice =%@",usrID);
-             NSLog(@"***********************************************************");
-             NSLog(@"***********************************************************");
-
          }
          else
          {
              
              // changes by Vivek
              
-             //             SCLAlertView *alert = [[SCLAlertView alloc] init];
-             //
-             //             [alert showWarning:self title:@"MenuPics" subTitle:@"Sorry  \nMenu Not Available!!!" closeButtonTitle:@"Done" duration:0.0f];
-             //
-             //             [alert addButton:@"" target:self selector:@selector(DoneButtonClicked)];
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
              
-             _alt=[[UIAlertView alloc]initWithTitle:@"MenuPics" message:@"Sorry  \nMenu Not Available!!!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Done", nil];
+             [alert addButton:@"Ok" actionBlock:^(void) {
+                 
+                 [self.navigationController popViewControllerAnimated:YES];
+                 
+             }];
              
-             [_alt setTag:111];
-             
-             [_alt show];
-             
-             
-             //
-             //[self.navigationController popViewControllerAnimated:YES];
-             
-             
+             [alert showTitle:self title:APP_NAME subTitle:[responseObject objectForKey:@"Message"] style:Warning closeButtonTitle:nil duration:0.0f];
          }
          [self.indicatorView stopAnimating];
          
          NSString * str=[defaults objectForKey:@"UserID"];
-         NSLog(@"Str==%@",str);
          
          [self.tableView reloadData];
              
@@ -379,9 +348,9 @@
      }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          
          
-         self.alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-         self.alt.tag=333;
-         [self.alt show];
+         UIAlertView * altv=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+         altv.tag=333;
+         [altv show];
      }];
     
 }
@@ -394,15 +363,12 @@
 }
 
 
-
-
 -(void)GetRestaurantLikeWebService
 {
     NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
     [dict setObject:self.FKRestaurantPin forKey:@"RestaurantPin"];
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_GET_RESTAURANT_LIKE
                                parameters:dict
@@ -412,7 +378,6 @@
          [self.indicatorView startAnimating];
          
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
-         NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
          GetLikesArray=[[NSMutableArray alloc]init];
          GetLikesArray=[responseObject objectForKey:DATA];
          NSDictionary * d = [GetLikesArray objectAtIndex:0];
@@ -421,8 +386,6 @@
          
          NSString * strD=_RDisLike;
          NSNumber * strL=_RLike;
-         NSLog(@"Value for RDislike=%@",strD);
-         NSLog(@"Value for RLike=%@",strL);
          
          if(result)
          {
@@ -431,41 +394,31 @@
              _RLike=[d valueForKey:@"RLike"];
              if ([strD isEqual:[NSNumber numberWithLong:1]])
              {
-                 //                 _btnFavourite.backgroundColor=[UIColor redColor];
                  [_btnFavourite setBackgroundImage:[UIImage imageNamed:@"favourites_gray.png"] forState:UIControlStateNormal];
-                 
              }
              else
              {
-                 //                 _btnFavourite.backgroundColor=[UIColor yellowColor];
                  [_btnFavourite setBackgroundImage:[UIImage imageNamed:@"favourites_orange.png"] forState:UIControlStateNormal];
-                 
              }
              
-             NSLog(@"Restairant Dislike: %@", _RDisLike);
-             NSLog(@"Restairant Like: %@", _RLike);
          }
          else
          {
              _RDisLike=[d valueForKey:@"RDisLike"];
              _RLike=[d valueForKey:@"RLike"];
              
-             NSLog(@"Restairant Dislike: %@", _RDisLike);
-             NSLog(@"Restairant Like: %@", _RLike);
          }
 
          [self.indicatorView stopAnimating];
          
-         NSLog(@"Restairant Dislike: %@", _RDisLike);
-         NSLog(@"Restairant Like: %@", _RLike);
          [self.tableView reloadData];
          
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          
-         self.alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-         [self.alt show];
+         UIAlertView * altv=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+         [altv show];
      }];
 }
 
@@ -487,7 +440,6 @@
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              NSArray * array=[[NSArray alloc]init];
              array=[responseObject objectForKey:DATA];
              
@@ -505,13 +457,11 @@
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error){
          
-         self.alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-         [self.alt show];
+         UIAlertView * altv=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+         [altv show];
          
      }];
 }
-
-
 
 -(void)SetRestaurantDislikeWebService       //Dislike Restaurant     Task=2
 {
@@ -520,7 +470,6 @@
     [dict setObject:@"2" forKey:@"Task"];
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
-    NSLog(@"%@",dict);
     [[AFAppAPIClient WSsharedClient] POST:API_SAVE_REST_LIKE_DISLIKE
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -531,7 +480,6 @@
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              NSArray * array=[[NSArray alloc]init];
              array=[responseObject objectForKey:DATA];
              
@@ -546,8 +494,8 @@
          
      }failure:^(AFHTTPRequestOperation *operation, NSError *error){
          
-         self.alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-         [self.alt show];
+         UIAlertView * altv=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+         [altv show];
      }];
 }
 
@@ -561,7 +509,6 @@
     self.navigationController.navigationBar.translucent = NO;
     
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial Rounded MT Bold" size:14],NSFontAttributeName, nil]];
-
     
     //Back Button
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -607,18 +554,12 @@
 
 -(void)favAction
 {
-    NSLog(@"Favorite button clicked");
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-    NSLog(@"User ID=%@",[defaults objectForKey:@"UserID"]);
     NSString * str=[defaults objectForKey:@"UserID"];
-    NSLog(@"Str==%@",str);
     
     if ([str isEqual:@"0"])
     {
-        
-        //        _btnFavourite.backgroundColor=[UIColor redColor];
         [_btnFavourite setBackgroundImage:[UIImage imageNamed:@"favourites_gray.png"] forState:UIControlStateNormal];
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         
         LoginViewController * log=[[LoginViewController alloc]init];
         [self.navigationController pushViewController:log animated:YES];
@@ -626,7 +567,6 @@
     }
     else
     {
-        
         if ([[_btnFavourite backgroundImageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"favourites_gray.png"]])
         {
             [self SetRestaurantLikeWebService];
@@ -641,30 +581,27 @@
 
 -(void)callAction
 {
-    
-    NSLog(@"%@",self.RestaurantPhone1);
     NSString *phNo = self.RestaurantPhone1;
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [[UIApplication sharedApplication] openURL:phoneUrl];
     }
     else
     {
         UIAlertView * calert = [[UIAlertView alloc]initWithTitle:APP_NAME message:@"\nCall facility is not available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [calert show];
     }
 }
 
 -(void)addressAction
 {
-    NSLog(@"Address button clicked");
-    self.alt=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[NSString stringWithFormat:@"\n%@,\n%@.",self.RestaurantAddress,self.RestaurantCity] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [[UIView appearance] setTintColor:[UIColor darkTextColor]];
-    self.alt.tag=555;
-    [self.alt show];    
+    UIAlertView * altv=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[NSString stringWithFormat:@"\n%@,\n%@.",self.RestaurantAddress,self.RestaurantCity] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//    [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+    altv.tag=600;
+    [altv show];
 }
 
 
@@ -672,37 +609,31 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if ((self.alt.tag=111))
-    {
-        if (buttonIndex==0)
-        {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else
-        {
-            
-        }
-           }
-    else if (self.alt.tag==222)
+    if (alertView.tag==111)
     {
         if (buttonIndex==0)
         {
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    else if (self.alt.tag==333)
+    else if (alertView.tag==222)
     {
         if (buttonIndex==0)
         {
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    else if (self.alt.tag==444) //Set Favorite Alert action
+    else if (alertView.tag==333)
     {
         if (buttonIndex==0)
         {
-            //            [self.navigationController popViewControllerAnimated:YES];
-            //            _btnFavourite.backgroundColor=[UIColor redColor];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    else if (alertView.tag==444) //Set Favorite Alert action
+    {
+        if (buttonIndex==0)
+        {
             [_btnFavourite setBackgroundImage:[UIImage imageNamed:@"favourites_gray.png"] forState:UIControlStateNormal];
             
         }
@@ -713,12 +644,15 @@
             
         }
     }
-    else if (self.alt.tag==555) //view Menu Not avilable
+    else if (alertView.tag==555) //view Menu Not avilable
     {
         if (buttonIndex==0)
         {
             [self.navigationController popViewControllerAnimated:YES];
         }
+    }
+    else
+    {
     }
 }
 

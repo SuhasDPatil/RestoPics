@@ -88,7 +88,7 @@
 
 
 
-@property(strong,nonatomic)UIAlertView *alt;
+//@property(strong,nonatomic)UIAlertView *alt;
 
 
 

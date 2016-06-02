@@ -28,6 +28,16 @@ NSUserDefaults *UserDetails;
 {
     [super viewDidLoad];
     
+    if ([_FromProfileView isEqual:@"Profile"])
+    {
+        _btnSkip.hidden=YES;
+    }
+    else
+    {
+        _btnSkip.hidden=NO;
+    }
+    
+    
     _indicatorView.hidden=YES;
     
     UserDetails = [NSUserDefaults standardUserDefaults];
@@ -240,7 +250,6 @@ NSUserDefaults *UserDetails;
     
     [self.indicatorView startAnimating];
 
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_LOGIN
                                parameters:dict
@@ -251,7 +260,6 @@ NSUserDefaults *UserDetails;
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
          NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
-         NSLog(@"Result :  %@",isSuccessNumber);
          if([isSuccessNumber boolValue] == YES)
          {
              
@@ -278,7 +286,6 @@ NSUserDefaults *UserDetails;
                  _UsersPhoto=[d valueForKey:@"UsersPhoto"];
                  AgreeTandS=[d valueForKey:@"AgreeTandS"];
                  
-                 NSLog(@"UserId == %@",_UserID);
                  
    
                  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

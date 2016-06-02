@@ -12,7 +12,7 @@
 #import "ProfileViewController.h"
 
 #import "SCLAlertView.h"
-@interface ForgotPassViewController : UIViewController
+@interface ForgotPassViewController : UIViewController<UIAlertViewDelegate>
 
 
 

@@ -10,9 +10,9 @@
                 <outlet property="btnCancel" destination="Xye-F0-rhb" id="Jih-zK-Cb6"/>
                 <outlet property="btnProfileImage" destination="OtK-R0-QVQ" id="5nZ-QJ-Idm"/>
                 <outlet property="btnSignUp" destination="SY5-Yb-AyB" id="b0E-a5-qRD"/>
-                <outlet property="btncheckbox" destination="lCt-xz-euV" id="xP4-Go-zR2"/>
+                <outlet property="btncheckbox" destination="R3m-vs-VJt" id="K7W-Et-EFX"/>
+                <outlet property="img_CheckBox" destination="bO6-kg-yc8" id="5Nq-Nu-ESd"/>
                 <outlet property="img_ProfilePic" destination="cCk-Pn-8oR" id="GmM-js-m7U"/>
-                <outlet property="indicatorView" destination="int-I9-Bol" id="Yc0-wK-rPp"/>
                 <outlet property="txtConfermPass" destination="LwA-gT-Bc0" id="u4m-FE-O9Q"/>
                 <outlet property="txtEmail" destination="uzZ-zy-UA5" id="cMH-f5-578"/>
                 <outlet property="txtPassword" destination="oaw-8b-zsS" id="cbk-rd-CF5"/>
@@ -157,11 +157,6 @@
                                 <action selector="SignUpClicked:" destination="-1" eventType="touchUpInside" id="cnA-BB-P0x"/>
                             </connections>
                         </button>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="int-I9-Bol">
-                            <rect key="frame" x="150" y="274" width="20" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qkv-iK-bci">
                             <rect key="frame" x="84" y="431" width="125" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -169,19 +164,10 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lCt-xz-euV">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bO6-kg-yc8">
                             <rect key="frame" x="226" y="432" width="15" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <state key="normal" backgroundImage="uncheckbox.png">
-                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="btnactionchkbox:" destination="-1" eventType="touchUpInside" id="71O-xr-pnT"/>
-                            </connections>
-                        </button>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xye-F0-rhb">
                             <rect key="frame" x="8" y="49" width="49" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -194,19 +180,30 @@
                                 <action selector="CancelClicked:" destination="-1" eventType="touchUpInside" id="XGn-Nh-3Ve"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="R3m-vs-VJt">
+                            <rect key="frame" x="210" y="425" width="46" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="btnactionchkbox:" destination="-1" eventType="touchUpInside" id="aWz-A1-eWt"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="350" y="-1785"/>
+            <point key="canvasLocation" x="28" y="-1720"/>
         </view>
     </objects>
     <resources>
         <image name="Blurred_BG.png" width="640" height="1097"/>
         <image name="MenuPics_Logo_white.png" width="333" height="134"/>
-        <image name="uncheckbox.png" width="32" height="32"/>
         <image name="userPhoto.png" width="183" height="176"/>
     </resources>
 </document>

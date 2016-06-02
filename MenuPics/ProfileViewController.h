@@ -22,28 +22,17 @@
 
 
 @property (strong, nonatomic) IBOutlet UILabel *lblUserName;
-
 @property (strong, nonatomic) IBOutlet UILabel *lblUserGender;
-
 @property (strong, nonatomic) IBOutlet UILabel *lblUserEmailID;
-
 @property (strong, nonatomic) IBOutlet UILabel *lblUserPhone;
-
 @property (strong, nonatomic) IBOutlet UILabel *lblUserAddress;
-
 @property (strong, nonatomic) IBOutlet UIImageView *imgUserPhoto;
-
 @property (strong, nonatomic) IBOutlet UIButton *btnEdit;
-
 @property (strong, nonatomic) IBOutlet UIImageView *imgLargePhoto;
-
 @property (strong, nonatomic) NSUserDefaults* userid;
-
-//@property (strong, nonatomic) NSUserDefaults* userphoto;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
 - (IBAction)EditButtonClicked:(id)sender;
-
 - (IBAction)LogoutClicked:(id)sender;
-
 
 @end

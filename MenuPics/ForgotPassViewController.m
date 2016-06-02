@@ -148,9 +148,6 @@
     
     [self.indicatorView startAnimating];
 
-    
-    NSLog(@"%@",dict);
-    
     [[AFAppAPIClient WSsharedClient] POST:API_FORGOT_PASS
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -160,11 +157,16 @@
          NSDictionary *dict_res=(NSDictionary *)responseObject;
          
          NSNumber * isSuccessNumber = (NSNumber *)[dict_res objectForKey: RESULT];
-         NSLog(@"Result :  %@",isSuccessNumber);
          if([isSuccessNumber boolValue] == YES)
          {
              
-             [Utiles showAlert:APP_NAME Message:@"UserName and Password sent successfully on your mail..\n Thank you!!!"];
+//             [Utiles showAlert:APP_NAME Message:@"UserName and Password sent successfully on your mail..\n Thank you!!!"];
+
+             _txtEmailAddress.text=@"";
+             
+             UIAlertView * alt=[[UIAlertView alloc]initWithTitle:APP_NAME message:@"UserName and Password sent successfully on your mail..\n Thank you!!!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+             alt.tag=100;
+             [alt show];
              
              
              [self.indicatorView stopAnimating];
@@ -194,5 +196,16 @@
 }
 
 
+#pragma mark UIAlertView
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==100)
+    {
+        if (buttonIndex==0)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
 
 @end

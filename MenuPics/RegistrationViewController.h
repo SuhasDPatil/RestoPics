@@ -10,6 +10,7 @@
 #import "ImageCroppingView.h"
 #import "Constant.h"
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
 #import "ImageSelectionView.h"
 
@@ -37,7 +38,8 @@
 @property (strong, nonatomic) IBOutlet UIView *viewBorder2;
 @property (strong, nonatomic) IBOutlet UIView *viewBorder3;
 
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (strong, nonatomic) IBOutlet UIImageView *img_CheckBox;
+
 
 
 // checkbox of terms of services //

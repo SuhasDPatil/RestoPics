@@ -42,12 +42,6 @@
     [self setNavBar];
     self.title=@"Restaurant List";
     
-//    if ([self.btnFav isEqual:@"Favorite"])
-//    {
-//        self.title=@"My Favourites";
-//        [self MyFavoriteWebService];
-//        NSLog(@"Favourite WebService");
-//    }
     
     [self.tableView reloadData];
 }
@@ -150,8 +144,7 @@
 //    
 //        NSLog(@"Seder tag=== %li",(long)sender.tag);
 //        
-//        NSLog(@"%@",dlvc.restaurantsID);
-//    
+//
 //        [self.navigationController pushViewController:dlvc animated:YES];
         
     }
@@ -171,10 +164,6 @@
     mlvc.RestaurantCity=tempCell.cellDict[@"RestaurantCity"];
     mlvc.RestaurantPhone1=tempCell.cellDict[@"RestaurantPhone1"];
     
-    NSLog(@"Selected Restaurant Pin==%@",mlvc.FKRestaurantPin);
-    NSLog(@"Selected Restaurant Pin==%@",mlvc.RestaurantName);
-
-    
     [self.navigationController pushViewController:mlvc animated:YES];
 }
 
@@ -193,7 +182,6 @@
     
     [dict setObject:self.S_text forKey:@"SearchText"];
     
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_GET_REST_BY_SEARCH
                                parameters:dict
@@ -205,12 +193,10 @@
          
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              RestaurantListArray=[[NSMutableArray alloc]init];
              RestaurantListArray=[responseObject objectForKey:@"Data"];
              if(RestaurantListArray.count>0)
              {
-                 NSLog(@"Restaurant Array Count:::%ld",(unsigned long)RestaurantListArray.count);
                  int i;
                  for (i=0; i<RestaurantListArray.count; i++)
                  {
@@ -232,10 +218,6 @@
                      _Restaurant_Like=[d valueForKey:@"Restaurant_Like"];
                      _Restaurant_Dislike=[d valueForKey:@"Restaurant_Dislike"];
                      
-                     NSLog(@"Restaurant Name: %@", _RestaurantName);
-                     NSLog(@"Restaurant Address: %@", _RestaurantAddress);
-                     NSLog(@"Restaurant Photo: %@", _RestaurantPhoto);
-                     NSLog(@"Restaurant ID: %@",_RestaurantPin);
                  }
              }
              else
@@ -290,13 +272,11 @@
          
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              // NSArray *list=[responseObject objectForKey:@"Data"];
              RestaurantListArray=[[NSMutableArray alloc]init];
              RestaurantListArray=[responseObject objectForKey:@"Data"];
              if(RestaurantListArray.count>0)
              {
-                 NSLog(@"Restaurant Array Count:::%ld",(unsigned long)RestaurantListArray.count);
                  int i;
                  for (i=0; i<RestaurantListArray.count; i++)
                  {
@@ -317,11 +297,6 @@
                      _DealCount=[d valueForKey:@"DealCount"];
                      _Restaurant_Like=[d valueForKey:@"Restaurant_Like"];
                      _Restaurant_Dislike=[d valueForKey:@"Restaurant_Dislike"];
-                     
-                     
-                     NSLog(@"Restaurant Name: %@", _RestaurantName);
-                     NSLog(@"Restaurant Address: %@", _RestaurantAddress);
-                     NSLog(@"Restaurant Photo: %@", _RestaurantPhoto);
                      
                  }
                  

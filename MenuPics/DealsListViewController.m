@@ -20,8 +20,8 @@
     [super viewDidLoad];
     self.title=@"Deals";
 
-    
-//    [self DealsRestaurantWebService];
+    [self DealsRestaurantWebService];
+
     
     queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
 
@@ -45,7 +45,6 @@
 
     [self setNavBar];
     
-    [self DealsRestaurantWebService];
     
 
     self.navigationController.navigationBarHidden=NO;
@@ -93,7 +92,6 @@
     cell.lblRestAddress.text=[NSString stringWithFormat:@"%@ %@",tempCell.cellDict[@"RestaurantAddress"],tempCell.cellDict[@"RestaurantAddress"]];
     
     
-    NSLog(@"%@",tempCell.cellDict[@"dealName"]);
     
     
     dispatch_async(queue, ^(){
@@ -109,7 +107,6 @@
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         UIImage * image = [UIImage imageWithData:imgData];
@@ -151,7 +148,6 @@
     ddvc.EndDate=tempCell.cellDict[@"EndDate"];
     ddvc.endTime=tempCell.cellDict[@"endTime"];
 
-    NSLog(@"Selected Restaurant Name==%@",ddvc.RestaurantName);
     
     [self.navigationController pushViewController:ddvc animated:YES];
 
@@ -198,7 +194,6 @@
 //    [dict setObject:@"73.94" forKey:@"Long"];
 
     
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_RESTAURANT_DEAL_GPS
                                parameters:dict
@@ -209,12 +204,10 @@
          
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              DealListArray=[[NSMutableArray alloc]init];
              DealListArray=[responseObject objectForKey:@"Data"];
              if(DealListArray.count>0)
              {
-                 NSLog(@"Deal Array Count:::%ld",(unsigned long)DealListArray.count);
                  int i;
                  for (i=0; i<DealListArray.count; i++)
                  {
@@ -248,9 +241,6 @@
                      _RestaurantState=[d valueForKey:@"RestaurantState"];
                      _RestaurantZipcode=[d valueForKey:@"RestaurantZipcode"];
                      
-                     NSLog(@"Rest Name: %@", _RestaurantName);
-                     NSLog(@"Deal Name: %@", _dealName);
-                     NSLog(@"Deal Photo: %@", _DealPhoto);
                  }
              }
              else
@@ -260,17 +250,16 @@
          }
          else
          {
-             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:APP_NAME message:[responseObject objectForKey:@"Message"] preferredStyle:UIAlertControllerStyleAlert];
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
              
-             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction *action)
-                                        {
-                                            [self.tabBarController setSelectedIndex:0];
-                                        }];
-             [alertController addAction:okAction];
              
-             [self presentViewController:alertController animated:YES completion:nil];
-         }
+             [alert addButton:@"Ok" actionBlock:^(void) {
+                 
+                 [self.tabBarController setSelectedIndex:0];
+                 
+             }];
+             
+             [alert showTitle:self title:APP_NAME subTitle:[responseObject objectForKey:@"Message"] style:Warning closeButtonTitle:nil duration:0.0f];         }
 
          [_indicatorView stopAnimating];
          
@@ -280,11 +269,15 @@
          
          self.alt1=[[UIAlertView alloc]initWithTitle:APP_NAME message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
          self.alt1.tag=333;
-         [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//         [[UIView appearance] setTintColor:[UIColor darkTextColor]];
          [self.alt1 show];
      }];
 }
 
+-(void)DoneButtonClicked
+{
+    [self.tabBarController setSelectedIndex:0];
+}
 
 #pragma mark UIAlertViewDelegate
 

@@ -23,6 +23,5 @@
 - (IBAction)dealsClicked:(id)sender
 {
     
-    NSLog(@"Sender=== %@",sender);
 }
 @end

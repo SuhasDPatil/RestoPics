@@ -11,7 +11,7 @@
 #import "Constant.h"
 #import "AppDelegate.h"
 #import "ProfileViewController.h"
-
+#import "MBProgressHUD.h"
 
 #import "ImageSelectionView.h"
 
@@ -53,6 +53,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorViewProfile;
 
 
 

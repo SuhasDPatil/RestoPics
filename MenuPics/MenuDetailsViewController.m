@@ -67,7 +67,6 @@
     NSString * strP=@"PRICE $";
     self.lblPrice.text=[NSString stringWithFormat:@"%@%@",strP,strPrice];
     NSString *strCalories=self.M_DishCals;
-    NSLog(@"Dish Calories == %@",strCalories);
     NSString *strC=@" Calories";
     
     
@@ -84,6 +83,9 @@
         self.lblDishCalories.text=[NSString stringWithFormat:@"%@%@",strCalories,strC];
         
     }
+    
+    _btnLike.hidden=YES;
+    _btnDislike.hidden=YES;
     
     
     self.lblDishDetails.text=self.M_Dishdesc;
@@ -107,7 +109,6 @@
         
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
         UIImage * image = [UIImage imageWithData:imgData];
@@ -116,8 +117,10 @@
             
             self.imgDishImage.image=image;
             
-            [_indicatorView stopAnimating];
         });
+
+        [_indicatorView stopAnimating];
+
     });
 
 
@@ -194,18 +197,17 @@
 - (IBAction)WriteCommentClicked:(id)sender
 {
     
-    NSLog(@"Write Comment button clicked");
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-    NSLog(@"User ID=%@",[defaults objectForKey:@"UserID"]);
     NSString * str=[defaults objectForKey:@"UserID"];
-    NSLog(@"Str==%@",str);
     
     if ([str isEqual:@"0"])
     {
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         
         LoginViewController * log=[[LoginViewController alloc]init];
+        log.FromProfileView=@"MenuList";
+        
         [self.navigationController pushViewController:log animated:YES];
 
     }
@@ -218,7 +220,7 @@
         [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Comment",  nil]];
         [alertView setDelegate:self];
         
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [alertView setUseMotionEffects:true];
         alertView.tag=100;
         [alertView show];
@@ -227,19 +229,18 @@
 
 - (IBAction)LikeClicked:(id)sender
 {
-    NSLog(@"Like button clicked");
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-    NSLog(@"User ID=%@",[defaults objectForKey:@"UserID"]);
     NSString * str=[defaults objectForKey:@"UserID"];
-    NSLog(@"Str==%@",str);
     
     if ([str isEqual:@"0"])
     {
         
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         
         LoginViewController * log=[[LoginViewController alloc]init];
+        log.FromProfileView=@"MenuList";
+
         [self.navigationController pushViewController:log animated:YES];
 
     }
@@ -251,19 +252,18 @@
 
 - (IBAction)DislikeClicked:(id)sender
 {
-    NSLog(@"Dislike button clicked");
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-    NSLog(@"User ID=%@",[defaults objectForKey:@"UserID"]);
     NSString * str=[defaults objectForKey:@"UserID"];
-    NSLog(@"Str==%@",str);
     
     if ([str isEqual:@"0"])
     {
         
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         
         LoginViewController * log=[[LoginViewController alloc]init];
+        log.FromProfileView=@"MenuList";
+
         [self.navigationController pushViewController:log animated:YES];
 
     }
@@ -333,7 +333,6 @@
         
         NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
-        NSLog(@"DISH image URL==%@",combined);
         NSURL * url = [NSURL URLWithString:combined];
         NSData * imgData = [NSData dataWithContentsOfURL:url];
 
@@ -366,6 +365,8 @@
         if (buttonIndex==1)
         {
             LoginViewController * log=[[LoginViewController alloc]init];
+            log.FromProfileView=@"MenuList";
+
             [self.navigationController pushViewController:log animated:YES];
         }
     }
@@ -374,6 +375,8 @@
         if (buttonIndex==1)
         {
             LoginViewController * log=[[LoginViewController alloc]init];
+            log.FromProfileView=@"MenuList";
+
             [self.navigationController pushViewController:log animated:YES];
         }
     }
@@ -383,13 +386,13 @@
 #pragma mark CustomIOSAlertViewDelegate
 - (void)customIOS7dialogButtonTouchUpInside: (CustomIOSAlertView *)alertView clickedButtonAtIndex: (NSInteger)buttonIndex
 {
-    NSLog(@"Delegate: Button at position %d is clicked on alertView %d.", (int)buttonIndex, (int)[alertView tag]);
     if (buttonIndex==0)
     {
         [alertView close];
     }
     else
     {
+        
         [self CommentWebService];
         [alertView close];
     }
@@ -464,12 +467,6 @@
     lbl.textColor=[UIColor darkTextColor];
     [demoView addSubview:lbl];
 
-//    UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(10, 28, 270, 160)];
-//    textView.text=@"Share Your Thoughts...";
-//    textView.textColor=[UIColor lightGrayColor];
-//    textView.delegate=self;
-//    [demoView addSubview:textView];
-
     _txtCommentView=[[UITextView alloc]initWithFrame:CGRectMake(10, 38, 270, 155)];
     _txtCommentView.text=@"Share Your Thoughts...";
     _txtCommentView.textColor=[UIColor darkGrayColor];
@@ -528,28 +525,25 @@
 -(void)callAction
 {
   
-    NSLog(@"%@",self.RestaurantPhone1);
     NSString *phNo = self.RestaurantPhone1;
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phNo]];
     
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [[UIApplication sharedApplication] openURL:phoneUrl];
     }
     else
     {
         UIAlertView * calert = [[UIAlertView alloc]initWithTitle:APP_NAME message:@"\nCall facility is not available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
+//        [[UIView appearance] setTintColor:[UIColor darkTextColor]];
         [calert show];
     }
 }
 
 -(void)addressAction
 {
-    NSLog(@"Address button clicked");
     UIAlertView *altA=[[UIAlertView alloc]initWithTitle:self.RestaurantName message:[NSString stringWithFormat:@"\n%@.",self.RestaurantAddress] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [[UIView appearance] setTintColor:[UIColor darkTextColor]];
     [altA show];
 }
 
@@ -569,24 +563,23 @@
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
     NSString * userID=[defaults objectForKey:@"UserID"];
     [dict setObject:userID forKey:@"UserID"];
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_GET_DISH_DETAIL_DISH_ID
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          [self.indicatorView startAnimating];
+         _btnLike.hidden=NO;
+         _btnDislike.hidden=NO;
          
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              // NSArray *list=[responseObject objectForKey:@"Data"];
              DetailListArray=[[NSMutableArray alloc]init];
              DetailListArray=[responseObject objectForKey:@"Data"];
              if(DetailListArray.count>0)
              {
-                 NSLog(@"Menu Array Count:::%ld",(unsigned long)DetailListArray.count);
                  int i;
                  for (i=0; i<DetailListArray.count; i++)
                  {
@@ -609,9 +602,6 @@
                      _RestaurantPhone1=[d valueForKey:@"RestaurantPhone1"];
                      _FKRestaurantpin=[d valueForKey:@"FKRestaurantpin"];
                      
-                     NSLog(@"Dish Name: %@", _DishName);
-                     NSLog(@"Dish Price: %@", _DishPrice);
-                     NSLog(@"Dish Calories: %@", _DishCals);
                      self.lblDishName.text=[d valueForKey:@"DishName"];
                      
                      self.lblLikeCount.text=[d valueForKey:@"goodLike"];
@@ -655,7 +645,6 @@
                  
                  FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
                  NSString *urlString=[NSString stringWithFormat:@"http://www.trymenupics.com/"];
-                 NSLog(@"Shre Link :%@",urlString);
                  content.contentURL = [NSURL URLWithString:urlString];
                  content.contentTitle=[NSString stringWithFormat:@"%@ \n : %@",_RestaurantName,_DishName];
                  content.contentDescription=[NSString stringWithFormat:@"\n %@",_Dishdesc];
@@ -663,7 +652,6 @@
                  NSString *combined = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
                  NSString * replacedStr=[combined stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                  NSString * rep=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
-                 NSLog(@"Image URL====%@",rep);
                  content.imageURL=[NSURL URLWithString:rep];
                  FBSDKShareButton *Sharebutton;
                  Sharebutton = [[FBSDKShareButton alloc] initWithFrame:CGRectMake(8, 242, 150, 30)];
@@ -731,7 +719,6 @@
     [dict setObject:self.DishID forKey:@"DishID"];
     [dict setObject:self.FKRestaurantpin forKey:@"FkresturantPin"];
 
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_SAVE_DISH_COMMENT
                                parameters:dict
@@ -743,8 +730,6 @@
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
-             
              
          }
          else
@@ -776,7 +761,6 @@
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
 
-    NSLog(@"%@",dict);
     
     [[AFAppAPIClient WSsharedClient] POST:API_SAVE_DISH_LIKE_DISLIKE
                                parameters:dict
@@ -787,20 +771,16 @@
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              LikeDislikeListArray=[[NSMutableArray alloc]init];
              LikeDislikeListArray=[responseObject objectForKey:@"Data"];
              if(LikeDislikeListArray.count>0)
              {
-                 NSLog(@"Menu Array Count::%ld",(unsigned long)DetailListArray.count);
              
                  NSDictionary * d = [LikeDislikeListArray objectAtIndex:0];
                  
                  _M_goodLike=[d valueForKey:@"DishLike"];
                  _M_dislike=[d valueForKey:@"DishDisLike"];
                  
-                 NSLog(@"Dish Like: %@", _M_goodLike);
-                 NSLog(@"Dish Dislike: %@", _M_dislike);
 
                  self.lblLikeCount.text=[[d valueForKey:@"DishLike"]stringValue];
                  self.lblDislikeCount.text=[[d valueForKey:@"DishDisLike"]stringValue];
@@ -848,7 +828,6 @@
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     [dict setObject:[defaults objectForKey:@"UserID"] forKey:@"UserID"];
     
-    NSLog(@"%@",dict);
     [[AFAppAPIClient WSsharedClient] POST:API_SAVE_DISH_LIKE_DISLIKE
                                parameters:dict
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -858,20 +837,16 @@
          BOOL result=[[responseObject objectForKey:@"Result"] boolValue];
          if(result)
          {
-             NSLog(@"Data:%@",[responseObject objectForKey:@"Data"]);
              LikeDislikeListArray=[[NSMutableArray alloc]init];
              LikeDislikeListArray=[responseObject objectForKey:@"Data"];
              if(LikeDislikeListArray.count>0)
              {
-                 NSLog(@"Menu Array Count::%ld",(unsigned long)DetailListArray.count);
                  
                  NSDictionary * d = [LikeDislikeListArray objectAtIndex:0];
                  
                  _M_goodLike=[d valueForKey:@"DishLike"];
                  _M_dislike=[d valueForKey:@"DishDisLike"];
                  
-                 NSLog(@"Dish Like: %@", _M_goodLike);
-                 NSLog(@"Dish Dislike: %@", _M_dislike);
                  
                  self.lblLikeCount.text=[[d valueForKey:@"DishLike"]stringValue];
                  self.lblDislikeCount.text=[[d valueForKey:@"DishDisLike"]stringValue];
