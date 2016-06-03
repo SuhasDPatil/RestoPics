@@ -55,16 +55,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="W6R-lm-T4b">
-                        <rect key="frame" x="150" y="95" width="20" height="20"/>
-                    </activityIndicatorView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="ImageCalories" destination="cp5-PR-dIW" id="sW7-pn-YE6"/>
                 <outlet property="imgDishImage" destination="ZpU-Z3-cMK" id="YKH-L7-Pqu"/>
                 <outlet property="imgPriceBG" destination="QOe-aN-SlJ" id="DS1-uY-gws"/>
-                <outlet property="indicatorV" destination="W6R-lm-T4b" id="izg-e4-3sD"/>
                 <outlet property="lblDishCalories" destination="TT2-cC-F6c" id="bnu-Am-so5"/>
                 <outlet property="lblDishName" destination="3RW-u0-WGB" id="k9M-nY-T7X"/>
                 <outlet property="lblDishPrice" destination="jIQ-yE-yGo" id="AvU-ex-gM9"/>

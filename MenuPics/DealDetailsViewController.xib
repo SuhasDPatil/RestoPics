@@ -16,7 +16,6 @@
                 <outlet property="btnMenus" destination="1ys-iV-EPH" id="yjS-nu-g4N"/>
                 <outlet property="btnTwitterPost" destination="z1n-5Z-lbe" id="onV-BV-IPl"/>
                 <outlet property="imgDealPhoto" destination="1HY-7m-8J2" id="nry-pd-Llf"/>
-                <outlet property="indicatorView" destination="Ybd-a2-4cF" id="Wai-Dc-8s4"/>
                 <outlet property="lblDealCondition" destination="t62-5R-fNy" id="DDW-a4-ryR"/>
                 <outlet property="lblDealName" destination="Sqe-K0-lnX" id="sox-UE-OPL"/>
                 <outlet property="lblDislikeCount" destination="Lg9-7M-l07" id="0FR-cb-yfm"/>
@@ -255,11 +254,6 @@
                         <action selector="commentClicked:" destination="-1" eventType="touchUpInside" id="hE1-u8-FzK"/>
                     </connections>
                 </button>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="Ybd-a2-4cF">
-                    <rect key="frame" x="150" y="115" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="color" red="0.78714937360000004" green="0.46194134920000002" blue="0.0263002115" alpha="0.98999999999999999" colorSpace="calibratedRGB"/>
-                </activityIndicatorView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1ys-iV-EPH">
                     <rect key="frame" x="292" y="31" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

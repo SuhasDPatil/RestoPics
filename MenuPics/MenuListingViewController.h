@@ -91,6 +91,7 @@
 //@property(strong,nonatomic)UIAlertView *alt;
 
 
+@property(nonatomic)AFHTTPRequestOperationManager *operationManager;
 
 
 @end

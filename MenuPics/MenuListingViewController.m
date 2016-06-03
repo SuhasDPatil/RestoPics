@@ -19,8 +19,6 @@
 {
     [super viewDidLoad];
     
-    //    NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
-    
     appDelegate = [[UIApplication sharedApplication]delegate];
     
     NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
@@ -28,7 +26,6 @@
     
     if ([userid isEqual:@"0"])
     {
-        //       _btnFavourite.backgroundColor=[UIColor redColor];
     }
     else
     {
@@ -37,7 +34,6 @@
     
     [self MenuListService];
 
-    
     queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
     
     self.title=self.RestaurantName;
@@ -58,10 +54,10 @@
     self.navigationController.navigationBarHidden=YES;
 
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden=YES;
-}
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    self.navigationController.navigationBarHidden=YES;
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -194,28 +190,25 @@
     }
     
     
-    dispatch_async(queue, ^(){
-        
-        [cell.indicatorV startAnimating];
-        
-        NSString * imgURL = tempCell.cellDict[@"DishUrl"];
-        
-        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
-        
-        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
-        
-        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString * imgURL = tempCell.cellDict[@"DishUrl"];
 
-        
-        NSURL * url = [NSURL URLWithString:combined];
-        NSData * imgData = [NSData dataWithContentsOfURL:url];
-        UIImage * image = [UIImage imageWithData:imgData];
-        dispatch_async( dispatch_get_main_queue() , ^(){
-            
-            cell.imgDishImage.image=image;
-            [cell.indicatorV stopAnimating];
-        });
-    });
+    NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+
+    NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+
+    NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+
+    cell.imgDishImage.image = [UIImage imageNamed:@"placeholder"];
+    
+    [self.operationManager GET: combined
+                    parameters:nil
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                           cell.imgDishImage.image = responseObject;
+                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           NSLog(@"Failed with error %@.", error);
+                       }];
+
+    
     return cell;
 
 }
@@ -266,7 +259,17 @@
 }
 
 
+-(AFHTTPRequestOperationManager *)operationManager
+{
+    if (!_operationManager)
+    {
+        _operationManager = [[AFHTTPRequestOperationManager alloc] init];
+        _operationManager.responseSerializer = [AFImageResponseSerializer serializer];
+    };
+    
+    return _operationManager;
 
+}
 
 
 #pragma mark Webservices

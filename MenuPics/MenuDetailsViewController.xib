@@ -16,7 +16,6 @@
                 <outlet property="imgDishImage" destination="0wb-CX-gE9" id="0C9-uX-ywK"/>
                 <outlet property="imgDislike" destination="Gtt-TX-GGj" id="NMy-UZ-yPl"/>
                 <outlet property="imgLike" destination="bSF-xt-LQb" id="ilW-re-5Yw"/>
-                <outlet property="indicatorView" destination="Oq0-kL-MA6" id="r4o-bA-JDL"/>
                 <outlet property="lblCaloriesBorder" destination="reV-PQ-NWz" id="ayE-vF-Gwr"/>
                 <outlet property="lblCommentBorder" destination="d8t-zG-6xv" id="Bco-hg-Sdu"/>
                 <outlet property="lblDishCalories" destination="kji-h9-L1A" id="NNJ-bI-IMg"/>
@@ -107,11 +106,6 @@
                     <color key="textColor" red="0.8927888169" green="0.51278505760000004" blue="0.0098466472710000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="Oq0-kL-MA6">
-                    <rect key="frame" x="151" y="123" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="color" red="0.78714937360000004" green="0.46194134920000002" blue="0.0263002115" alpha="0.98999999999999999" colorSpace="calibratedRGB"/>
-                </activityIndicatorView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bzo-qZ-Spu">
                     <rect key="frame" x="0.0" y="262" width="320" height="306"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

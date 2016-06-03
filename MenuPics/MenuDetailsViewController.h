@@ -200,5 +200,6 @@
 @property(nonatomic,strong)UIAlertView *alt;
 
 
+@property(nonatomic)AFHTTPRequestOperationManager *operationManager;
 
 @end

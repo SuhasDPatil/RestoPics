@@ -79,6 +79,7 @@
 
 
 
+@property(nonatomic)AFHTTPRequestOperationManager *operationManager;
 
 
 //Get Data from DealListViewController

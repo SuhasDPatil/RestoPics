@@ -39,35 +39,61 @@
     self.lblDate.text=[NSString stringWithFormat:@"%@ to %@",_StartDate,_EndDate];
     self.lblTime.text=[NSString stringWithFormat:@"%@ to %@",_StartTime,_endTime];
     
-    queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
+//    queue = dispatch_queue_create("download", DISPATCH_QUEUE_CONCURRENT);
+//    
+//    dispatch_async(queue, ^(){
+//        
+//        [_indicatorView startAnimating];
+//        
+//        NSString * imgURL = self.DealPhoto;
+//        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+//        
+//        
+//        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+//        
+//        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        
+//        NSURL * url = [NSURL URLWithString:combined];
+//        NSData * imgData = [NSData dataWithContentsOfURL:url];
+//        UIImage * image = [UIImage imageWithData:imgData];
+//        
+//        dispatch_async( dispatch_get_main_queue() , ^(){
+//            
+//            self.imgDealPhoto.image=image;
+//            
+//            [_indicatorView stopAnimating];
+//        });
+//    });
     
-    dispatch_async(queue, ^(){
-        
-        [_indicatorView startAnimating];
-        
-        NSString * imgURL = self.DealPhoto;
-        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
-        
-        
-        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
-        
-        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        
-        NSURL * url = [NSURL URLWithString:combined];
-        NSData * imgData = [NSData dataWithContentsOfURL:url];
-        UIImage * image = [UIImage imageWithData:imgData];
-        
-        dispatch_async( dispatch_get_main_queue() , ^(){
-            
-            self.imgDealPhoto.image=image;
-            
-            [_indicatorView stopAnimating];
-        });
-    });
+    NSString * imgURL = self.DealPhoto;
+    NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+
+    NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+
+    NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
+    [self.operationManager GET: combined
+                    parameters:nil
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                           self.imgDealPhoto.image = responseObject;
+                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           NSLog(@"Failed with error %@.", error);
+                       }];
     
     
     // Do any additional setup after loading the view from its nib.
+}
+
+-(AFHTTPRequestOperationManager *)operationManager
+{
+    if (!_operationManager)
+    {
+        _operationManager = [[AFHTTPRequestOperationManager alloc] init];
+        _operationManager.responseSerializer = [AFImageResponseSerializer serializer];
+    };
+    
+    return _operationManager;
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated

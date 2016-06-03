@@ -93,33 +93,62 @@
     
     
     
+//    
+//    dispatch_async(queue, ^(){
+//        
+//        [cell.indicatorV startAnimating];
+//        
+//        NSString * imgURL = tempCell.cellDict[@"DealPhoto"];
+//        
+//        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+//        
+//        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+//        
+//        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//        
+//        
+//        NSURL * url = [NSURL URLWithString:combined];
+//        NSData * imgData = [NSData dataWithContentsOfURL:url];
+//        UIImage * image = [UIImage imageWithData:imgData];
+//        dispatch_async( dispatch_get_main_queue() , ^(){
+//            
+//            cell.imgDealPhoto.image=image;
+//            
+//            [cell.indicatorV stopAnimating];
+//        });
+//    });
+
+    NSString * imgURL = tempCell.cellDict[@"DealPhoto"];
+
+    NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
+
+    NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+
+    NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
-    dispatch_async(queue, ^(){
-        
-        [cell.indicatorV startAnimating];
-        
-        NSString * imgURL = tempCell.cellDict[@"DealPhoto"];
-        
-        NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_DISH_PHOTO,imgURL];
-        
-        NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
-        
-        NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        
-        
-        NSURL * url = [NSURL URLWithString:combined];
-        NSData * imgData = [NSData dataWithContentsOfURL:url];
-        UIImage * image = [UIImage imageWithData:imgData];
-        dispatch_async( dispatch_get_main_queue() , ^(){
-            
-            cell.imgDealPhoto.image=image;
-            
-            [cell.indicatorV stopAnimating];
-        });
-    });
-
+    cell.imgDealPhoto.image = [UIImage imageNamed:@"placeholder"];
+    
+    [self.operationManager GET: combined
+                    parameters:nil
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                           cell.imgDealPhoto.image = responseObject;
+                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           NSLog(@"Failed with error %@.", error);
+                       }];
+    
+    
     return cell;
-
+    
+}
+-(AFHTTPRequestOperationManager *)operationManager
+{
+    if (!_operationManager)
+    {
+        _operationManager = [[AFHTTPRequestOperationManager alloc] init];
+        _operationManager.responseSerializer = [AFImageResponseSerializer serializer];
+    };
+    
+    return _operationManager;
     
 }
 

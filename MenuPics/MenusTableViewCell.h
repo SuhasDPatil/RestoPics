@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblPriceBG;
 
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorV;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgPriceBG;
 
