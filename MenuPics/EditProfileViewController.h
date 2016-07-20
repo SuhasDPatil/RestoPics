@@ -26,6 +26,7 @@
 
 }
 
+@property(nonatomic)AFHTTPRequestOperationManager *operationManager;
 
 
 

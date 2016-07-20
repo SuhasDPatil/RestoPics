@@ -13,7 +13,7 @@
 @interface ProfileViewController : UIViewController<UIAlertViewDelegate>
 {
     dispatch_queue_t queue ;
-
+    NSUserDefaults * defaults;
 }
 
 @property(nonatomic,strong)UIAlertView *alt;
@@ -32,7 +32,12 @@
 @property (strong, nonatomic) NSUserDefaults* userid;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
+
+@property(nonatomic)AFHTTPRequestOperationManager *operationManager;
+
 - (IBAction)EditButtonClicked:(id)sender;
 - (IBAction)LogoutClicked:(id)sender;
+
+
 
 @end

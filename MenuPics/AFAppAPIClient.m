@@ -9,8 +9,8 @@
 #import "AFAppAPIClient.h"
 #import "Constant.h"
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperation.h"
-#import "AFHTTPRequestOperationManager.h"
+//#import "AFHTTPRequestOperation.h"
+//#import "AFHTTPRequestOperationManager.h"
 
 
 
@@ -44,6 +44,8 @@
     });
     return _sharedClient;
 }
+
+
 
 - (AFHTTPRequestOperation *)POST:(NSString *)URLString
                       parameters:(id)parameters

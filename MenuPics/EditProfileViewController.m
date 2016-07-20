@@ -41,34 +41,65 @@
     
     
     
-    dispatch_async(queue, ^(){
-        
-        [_indicatorViewProfile startAnimating];
-        
-        NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
-        NSString *combined = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
-        NSURL * url = [NSURL URLWithString:combined];
-        NSData * imgData = [NSData dataWithContentsOfURL:url];
-        UIImage * image = [UIImage imageWithData:imgData];
-        dispatch_async( dispatch_get_main_queue() , ^(){
-            if (image)
-            {
-                self.imgUserPhoto.image=image;
-            }
-            else
-            {
-                self.imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
-            }
-            [_indicatorViewProfile stopAnimating];
-        });
-    });
+//    dispatch_async(queue, ^(){
+//        
+//        [_indicatorViewProfile startAnimating];
+//        
+//        NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
+//        NSString *combined = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
+//        NSURL * url = [NSURL URLWithString:combined];
+//        NSData * imgData = [NSData dataWithContentsOfURL:url];
+//        UIImage * image = [UIImage imageWithData:imgData];
+//        dispatch_async( dispatch_get_main_queue() , ^(){
+//            if (image)
+//            {
+//                self.imgUserPhoto.image=image;
+//            }
+//            else
+//            {
+//                self.imgUserPhoto.image=[UIImage imageNamed:@"userPhoto.png"];
+//            }
+//            [_indicatorViewProfile stopAnimating];
+//        });
+//    });
     
+    
+    NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
+    NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
+    
+    NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+    
+    NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    [_indicatorViewProfile startAnimating];
+
+    [self.operationManager GET: combined
+                    parameters:nil
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                           self.imgUserPhoto.image = responseObject;
+                           [_indicatorViewProfile stopAnimating];
+                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           NSLog(@"Failed with error %@.", error);
+                       }];
+    
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 
     // Do any additional setup after loading the view from its nib.
+}
+
+-(AFHTTPRequestOperationManager *)operationManager
+{
+    if (!_operationManager)
+    {
+        _operationManager = [[AFHTTPRequestOperationManager alloc] init];
+        _operationManager.responseSerializer = [AFImageResponseSerializer serializer];
+    };
+    
+    return _operationManager;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -747,9 +778,6 @@
     [textField resignFirstResponder];
     return YES;
 }
-
-
-
 
 
 #pragma mark User Defined

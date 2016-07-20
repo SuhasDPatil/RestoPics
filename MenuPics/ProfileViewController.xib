@@ -33,7 +33,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W9m-Ko-wFK">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="userPhoto.png" translatesAutoresizingMaskIntoConstraints="NO" id="W9m-Ko-wFK">
                     <rect key="frame" x="98" y="191" width="125" height="125"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
@@ -103,6 +103,7 @@
                 </button>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="kFY-N5-TlL">
                     <rect key="frame" x="150" y="244" width="20" height="20"/>
+                    <color key="color" white="0.33333333333333331" alpha="0.39986530172413792" colorSpace="calibratedWhite"/>
                 </activityIndicatorView>
             </subviews>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -112,5 +113,6 @@
     <resources>
         <image name="Blurred_BG.png" width="640" height="1097"/>
         <image name="MenuPics_Logo_white.png" width="333" height="134"/>
+        <image name="userPhoto.png" width="183" height="176"/>
     </resources>
 </document>

@@ -71,9 +71,6 @@
 
 
 
-
-
-
 //For storing which button is clicked
 @property(strong,nonatomic)NSString *btnQRCode;
 

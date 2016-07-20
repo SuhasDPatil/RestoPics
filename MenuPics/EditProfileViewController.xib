@@ -193,6 +193,7 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="pfc-vB-wLh">
                             <rect key="frame" x="150" y="90" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" white="0.33333333329999998" alpha="0.39986530170000001" colorSpace="calibratedWhite"/>
                         </activityIndicatorView>
                     </subviews>
                     <connections>
@@ -215,7 +216,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="333" y="214"/>
+            <point key="canvasLocation" x="355" y="245"/>
         </view>
     </objects>
     <resources>

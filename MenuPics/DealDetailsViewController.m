@@ -149,7 +149,7 @@
     content.imageURL=[NSURL URLWithString:rep];
     FBSDKShareButton *Sharebutton;
     
-    Sharebutton = [[FBSDKShareButton alloc] initWithFrame:CGRectMake(50, 181, 80, 30)];
+    Sharebutton = [[FBSDKShareButton alloc] initWithFrame:CGRectMake(10, 183, 140, 36)];
     
 //     if ([[UIScreen mainScreen] bounds].size.height ==480)
 //     {

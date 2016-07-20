@@ -17,6 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    defaults=[NSUserDefaults standardUserDefaults];
 
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Arial Rounded MT Bold" size:14],NSFontAttributeName, nil]];
     
@@ -26,6 +27,21 @@
     [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
+    NSString * imgURL = [defaults valueForKey:@"UsersPhoto"];
+    NSString *replacedStr = [NSString stringWithFormat:@"%@%@", API_USER_PHOTO,imgURL];
+    
+    NSString * reps=[replacedStr stringByReplacingOccurrencesOfString:@"~" withString:@""];
+    
+    NSString * combined=[reps stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    [self.operationManager GET: combined
+                    parameters:nil
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                           self.imgUserPhoto.image = responseObject;
+                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           NSLog(@"Failed with error %@.", error);
+                       }];
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -48,7 +64,7 @@
     [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_green2"]];
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tab_orange2"]];
     
-    NSUserDefaults * defaults=[NSUserDefaults standardUserDefaults];
+    defaults=[NSUserDefaults standardUserDefaults];
     NSString * userID=[defaults objectForKey:@"UserID"];
     
     if ([userID isEqual:@"0"])
@@ -94,6 +110,10 @@
                 [_indicatorView stopAnimating];
             });
         });
+        
+        
+
+        
     }
 }
 

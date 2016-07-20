@@ -25,17 +25,24 @@
     {
         NSUInteger code = [CLLocationManager authorizationStatus];
         
-        if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])) {
+        if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]))
+        {
             // choose one request according to your business.
-            if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"]){
-                [self.locationManager requestAlwaysAuthorization];
-            } else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"]) {
+            if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"])
+            {
                 [self.locationManager  requestWhenInUseAuthorization];
-            } else {
+            }
+            else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"])
+            {
+                [self.locationManager requestAlwaysAuthorization];
+            }
+            else
+            {
                 NSLog(@"Info.plist does not contain NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription");
             }
         }
     }
+    
     [self.locationManager startUpdatingLocation];
 
     self.navigationController.navigationBarHidden=YES;
@@ -84,6 +91,8 @@
 
 - (IBAction)GPSClicked:(id)sender
 {
+    
+
     [self.txtSearch resignFirstResponder];
     
     RestaurantListViewController * rlvc=[[RestaurantListViewController alloc]init];
@@ -146,6 +155,9 @@
     [defaults setObject:_latit forKey:@"Lat"];
     [defaults setObject:_longit forKey:@"Long"];
     
+    
+    [self.locationManager stopUpdatingLocation];
+
 }
 
 
